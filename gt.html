@@ -189,6 +189,42 @@
 			margin-bottom: 1rem;
 		}
 
+		.players-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 1.5rem;
+			margin-top: 2rem;
+		}
+
+		.player-card {
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 15px;
+			padding: 1.5rem;
+			text-align: center;
+			transition: all 0.3s ease;
+			border: 1px solid rgba(0, 216, 255, 0.3);
+		}
+
+		.player-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 30px rgba(0, 216, 255, 0.3);
+			background: rgba(255, 255, 255, 0.15);
+		}
+
+		.player-role {
+			font-size: 0.9rem;
+			color: #00D8FF;
+			margin-top: 0.5rem;
+			text-transform: uppercase;
+			font-weight: 600;
+		}
+
+		.player-name {
+			font-size: 1.2rem;
+			font-weight: 700;
+			margin-bottom: 0.5rem;
+		}
+
 		.btn {
 			display: inline-block;
 			padding: 1rem 2rem;
@@ -221,7 +257,8 @@
 	<header>
 		<nav>
 			<a href="teams.html" class="logo">
-				<i class="fas fa-arrow-left"></i> Back to Teams
+				<img src="ipl_logo.svg" alt="IPL Logo" style="height: 30px; width: 30px; margin-right: 10px;" />
+				<span>Back to Teams</span>
 			</a>
 			<ul class="nav-links">
 				<li><a href="gt.html" class="active">About</a></li>
@@ -263,17 +300,116 @@
 		</div>
 
 		<div class="content-section">
-			<h2><i class="fas fa-star"></i> Key Players</h2>
-			<p>
-				The Gujarat Titans squad features star players including captain Hardik Pandya, explosive batsman David Miller, and rising star Shubman Gill. The team is known for its aggressive batting style and disciplined bowling.
-			</p>
+			<h2><i class="fas fa-users"></i> Complete Squad 2025</h2>
+			<div class="players-grid">
+				<div class="player-card">
+					<div class="player-name">Shubman Gill (C)</div>
+					<div class="player-role">Batsman</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Hardik Pandya</div>
+					<div class="player-role">All-Rounder</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">David Miller</div>
+					<div class="player-role">Batsman</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Rashid Khan</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Mohammed Shami</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Matthew Wade (WK)</div>
+					<div class="player-role">Wicket-Keeper</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Vijay Shankar</div>
+					<div class="player-role">All-Rounder</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Rahul Tewatia</div>
+					<div class="player-role">All-Rounder</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Josh Little</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Sai Sudharsan</div>
+					<div class="player-role">Batsman</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Wriddhiman Saha</div>
+					<div class="player-role">Wicket-Keeper</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Mohit Sharma</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">R Sai Kishore</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Noor Ahmad</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Kane Williamson</div>
+					<div class="player-role">Batsman</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Abhinav Manohar</div>
+					<div class="player-role">Batsman</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Azmatullah Omarzai</div>
+					<div class="player-role">All-Rounder</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Umesh Yadav</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Darshan Nalkande</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Spencer Johnson</div>
+					<div class="player-role">Bowler</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Shahrukh Khan</div>
+					<div class="player-role">All-Rounder</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Srikar Bharat</div>
+					<div class="player-role">Wicket-Keeper</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Parthiv Patel</div>
+					<div class="player-role">Wicket-Keeper</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Jayant Yadav</div>
+					<div class="player-role">All-Rounder</div>
+				</div>
+				<div class="player-card">
+					<div class="player-name">Manav Suthar</div>
+					<div class="player-role">Bowler</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="content-section">
 			<h2><i class="fas fa-link"></i> Official Information</h2>
 			<p>
 				Founded: 2021<br>
-				Captain: Hardik Pandya<br>
+				Captain: Shubman Gill<br>
 				Home Ground: Narendra Modi Stadium, Ahmedabad<br>
 				Owner: CVC Capital Partners
 			</p>

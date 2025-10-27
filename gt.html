@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GT - IPL2026</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="rcb_logo.png">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Poppins', sans-serif;
+			background: linear-gradient(135deg, #1B4F72 0%, #0E4B50 50%, #1A1A2E 100%);
+			background-size: 400% 400%;
+			animation: gradient 15s ease infinite;
+			min-height: 100vh;
+			position: relative;
+			overflow-x: hidden;
+			color: white;
+		}
+
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+			pointer-events: none;
+			z-index: 0;
+		}
+
+		@keyframes gradient {
+			0% { background-position: 0% 50%; }
+			50% { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 2rem;
+			position: relative;
+			z-index: 1;
+		}
+
+		header {
+			background: rgba(0, 0, 0, 0.3);
+			backdrop-filter: blur(10px);
+			padding: 1.5rem 0;
+			position: sticky;
+			top: 0;
+			z-index: 100;
+			border-bottom: 2px solid #00D8FF;
+		}
+
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 2rem;
+		}
+
+		.logo {
+			font-size: 1.5rem;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			text-decoration: none;
+			color: white;
+		}
+
+		.nav-links {
+			display: flex;
+			list-style: none;
+			gap: 1.5rem;
+		}
+
+		.nav-links a {
+			color: white;
+			text-decoration: none;
+			padding: 0.5rem 1rem;
+			border-radius: 50px;
+			transition: all 0.3s;
+		}
+
+		.nav-links a:hover, .nav-links a.active {
+			background: rgba(0, 216, 255, 0.3);
+			transform: translateY(-2px);
+		}
+
+		.team-header {
+			text-align: center;
+			padding: 3rem 0;
+		}
+
+		.team-logo {
+			width: 200px;
+			height: 200px;
+			margin: 0 auto 1rem;
+			filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+			animation: float 3s ease-in-out infinite;
+			background: linear-gradient(135deg, #1B4F72 0%, #0E4B50 100%);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 4rem;
+			color: white;
+			font-weight: bold;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0px); }
+			50% { transform: translateY(-10px); }
+		}
+
+		.team-name {
+			font-size: 3rem;
+			font-weight: 800;
+			margin-bottom: 0.5rem;
+			color: white;
+		}
+
+		.team-full-name {
+			font-size: 1.2rem;
+			color: rgba(255, 255, 255, 0.9);
+			margin-bottom: 2rem;
+		}
+
+		.trophy-section {
+			background: rgba(0, 216, 255, 0.2);
+			border-radius: 20px;
+			padding: 2rem;
+			margin: 2rem 0;
+			text-align: center;
+			border: 2px solid rgba(0, 216, 255, 0.3);
+		}
+
+		.trophy-section h2 {
+			font-size: 2rem;
+			margin-bottom: 1rem;
+			color: #00D8FF;
+		}
+
+		.trophy-info {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 1rem;
+			font-size: 1.2rem;
+		}
+
+		.trophy-icon {
+			font-size: 3rem;
+			color: #00D8FF;
+		}
+
+		.trophy-details {
+			text-align: left;
+		}
+
+		.content-section {
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			padding: 2rem;
+			margin: 2rem 0;
+		}
+
+		.content-section h2 {
+			font-size: 1.8rem;
+			margin-bottom: 1rem;
+			color: #00D8FF;
+		}
+
+		.content-section p {
+			font-size: 1.1rem;
+			line-height: 1.8;
+			color: rgba(255, 255, 255, 0.9);
+			margin-bottom: 1rem;
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 1rem 2rem;
+			background: linear-gradient(135deg, #00D8FF 0%, #0E4B50 100%);
+			color: white;
+			text-decoration: none;
+			border-radius: 50px;
+			font-weight: 600;
+			margin: 0.5rem;
+			transition: all 0.3s;
+		}
+
+		.btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 5px 15px rgba(0, 216, 255, 0.5);
+		}
+
+		@media (max-width: 768px) {
+			.team-name {
+				font-size: 2rem;
+			}
+			.nav-links {
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<nav>
+			<a href="teams.html" class="logo">
+				<i class="fas fa-arrow-left"></i> Back to Teams
+			</a>
+			<ul class="nav-links">
+				<li><a href="gt.html" class="active">About</a></li>
+				<li><a href="index.html">Home</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<div class="container">
+		<div class="team-header">
+			<div class="team-logo">GT</div>
+			<h1 class="team-name">Gujarat Titans</h1>
+			<p class="team-full-name">GT</p>
+		</div>
+
+		<div class="trophy-section">
+			<h2><i class="fas fa-trophy"></i> Trophies & Achievements</h2>
+			<div class="trophy-info">
+				<i class="fas fa-trophy trophy-icon"></i>
+				<div class="trophy-details">
+					<div><strong>IPL Titles:</strong> 1</div>
+					<div><strong>Winner:</strong> 2022 🏆</div>
+					<div><strong>Playoff Appearances:</strong> 2022</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-section">
+			<h2><i class="fas fa-info-circle"></i> About the Team</h2>
+			<p>
+				Gujarat Titans is a franchise cricket team based in Ahmedabad, Gujarat, that plays in the Indian Premier League. The team was founded in 2021 and made their debut in the 2022 season.
+			</p>
+			<p>
+				In a remarkable debut season, Gujarat Titans won the IPL championship in 2022, becoming only the third team to win the tournament in their maiden season. They achieved this feat under the leadership of Hardik Pandya.
+			</p>
+			<p>
+				The team plays their home matches at the Narendra Modi Stadium in Ahmedabad, the largest cricket stadium in the world with a capacity of 132,000. The Titans are owned by CVC Capital Partners and have quickly established themselves as one of the most exciting teams in the IPL.
+			</p>
+		</div>
+
+		<div class="content-section">
+			<h2><i class="fas fa-star"></i> Key Players</h2>
+			<p>
+				The Gujarat Titans squad features star players including captain Hardik Pandya, explosive batsman David Miller, and rising star Shubman Gill. The team is known for its aggressive batting style and disciplined bowling.
+			</p>
+		</div>
+
+		<div class="content-section">
+			<h2><i class="fas fa-link"></i> Official Information</h2>
+			<p>
+				Founded: 2021<br>
+				Captain: Hardik Pandya<br>
+				Home Ground: Narendra Modi Stadium, Ahmedabad<br>
+				Owner: CVC Capital Partners
+			</p>
+		</div>
+	</div>
+</body>
+</html>

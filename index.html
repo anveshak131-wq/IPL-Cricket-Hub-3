@@ -5,8 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPL 2026 - Indian Premier League</title>
     <link rel="shortcut icon" href="index.ico" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --secondary-gradient: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            --accent-color: #ffd700;
+            --text-light: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,176 +24,295 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-gradient);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             overflow-x: hidden;
+            color: white;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
         /* Header */
         header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(0, 0, 0, 0.3);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1.2rem 0;
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: white;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+            animation: float 3s ease-in-out infinite;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
-            color: white;
+            color: var(--text-light);
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
             transition: all 0.3s ease;
+            font-weight: 500;
             position: relative;
         }
 
         .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
             transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: var(--secondary-gradient);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .mobile-menu {
             display: none;
             flex-direction: column;
             cursor: pointer;
+            gap: 5px;
         }
 
         .mobile-menu span {
             width: 25px;
             height: 3px;
             background: white;
-            margin: 3px 0;
             transition: 0.3s;
+            border-radius: 3px;
         }
 
-        /* Main Content */
-        main {
-            margin-top: 80px;
-            padding: 2rem 0;
-        }
-
+        /* Hero Section */
         .hero {
+            padding: 150px 0 80px;
             text-align: center;
-            padding: 4rem 0;
-            color: white;
+            position: relative;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .hero-content {
             animation: fadeInUp 1s ease-out;
         }
 
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.2s both;
+            font-size: 1.4rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
-            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
         .btn {
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             border: none;
             border-radius: 50px;
             font-size: 1rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            background: var(--secondary-gradient);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--glass-border);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-3px);
         }
 
-        /* Teams Grid */
+        /* Stats Section */
+        .stats-section {
+            padding: 4rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Teams Section */
         .teams-section {
             padding: 4rem 0;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 3rem;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
         }
 
         .teams-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .team-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
             padding: 2rem;
             text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--glass-border);
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 1s ease-out;
         }
 
         .team-card::before {
@@ -202,87 +331,56 @@
         }
 
         .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-color);
         }
 
         .team-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 1rem;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1.5rem;
             border-radius: 50%;
             object-fit: contain;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
         }
 
         .team-card:hover .team-logo {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(5deg);
         }
 
         .team-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
         .team-info {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item {
-            color: white;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
+            color: var(--text-light);
             font-size: 1rem;
-            opacity: 0.8;
         }
 
         /* Footer */
         footer {
             background: rgba(0, 0, 0, 0.3);
-            color: white;
+            backdrop-filter: blur(10px);
             text-align: center;
             padding: 2rem 0;
             margin-top: 4rem;
+            border-top: 1px solid var(--glass-border);
         }
 
         /* Loading Animation */
         .loading {
             display: none;
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid white;
             border-radius: 50%;
@@ -290,57 +388,9 @@
             margin: 0 auto;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.9);
-                flex-direction: column;
-                padding: 1rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-menu {
-                display: flex;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .teams-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
         }
 
         /* Modal Styles */
@@ -357,53 +407,100 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             margin: 5% auto;
-            padding: 2rem;
-            border-radius: 20px;
+            padding: 3rem;
+            border-radius: 30px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             position: relative;
-            animation: modalSlideIn 0.3s ease-out;
+            border: 1px solid var(--glass-border);
+            animation: fadeInUp 0.5s ease-out;
         }
 
         .close {
             color: white;
-            float: right;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             cursor: pointer;
             position: absolute;
-            top: 1rem;
-            right: 1.5rem;
+            top: 1.5rem;
+            right: 2rem;
+            transition: transform 0.3s ease;
         }
 
         .close:hover {
-            opacity: 0.7;
+            transform: rotate(90deg);
         }
 
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .teams-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .team-card {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header id="header">
         <nav class="container">
-            <a href="#" class="logo">IPL 2026</a>
+            <a href="#" class="logo">
+                <i class="fas fa-cricket-ball"></i>
+                <span>IPL 2026</span>
+            </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#teams">Teams</a></li>
                 <li><a href="fixtures_modern.html">Fixtures</a></li>
-                <li><a href="points_modern.html">Points Table</a></li>
-                <li><a href="scores_modern.html">Live Scores</a></li>
+                <li><a href="points_modern.html">Points</a></li>
+                <li><a href="scores_modern.html">Scores</a></li>
                 <li><a href="about.html">About</a></li>
             </ul>
             <div class="mobile-menu" onclick="toggleMobileMenu()">
@@ -417,11 +514,19 @@
     <main>
         <section id="home" class="hero">
             <div class="container">
-                <h1>IPL 2026</h1>
-                <p>Experience the thrill of the Indian Premier League like never before</p>
-                <div class="cta-buttons">
-                    <a href="#teams" class="btn btn-primary">Explore Teams</a>
-                    <a href="fixtures_modern.html" class="btn btn-secondary">View Fixtures</a>
+                <div class="hero-content">
+                    <h1>IPL 2026</h1>
+                    <p>Experience the pinnacle of T20 cricket with the world's most exciting cricket league</p>
+                    <div class="cta-buttons">
+                        <a href="#teams" class="btn btn-primary">
+                            <i class="fas fa-users"></i>
+                            Explore Teams
+                        </a>
+                        <a href="fixtures_modern.html" class="btn btn-secondary">
+                            <i class="fas fa-calendar-alt"></i>
+                            View Fixtures
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -429,21 +534,21 @@
         <section class="stats-section">
             <div class="container">
                 <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalMatches">56</span>
-                        <span class="stat-label">Total Matches</span>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalMatches">56</div>
+                        <div class="stat-label">Total Matches</div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalTeams">8</span>
-                        <span class="stat-label">Teams</span>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalTeams">8</div>
+                        <div class="stat-label">Teams</div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="liveMatches">0</span>
-                        <span class="stat-label">Live Now</span>
+                    <div class="stat-card">
+                        <div class="stat-number" id="liveMatches">0</div>
+                        <div class="stat-label">Live Now</div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="completedMatches">0</span>
-                        <span class="stat-label">Completed</span>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completedMatches">0</div>
+                        <div class="stat-label">Completed</div>
                     </div>
                 </div>
             </div>
@@ -452,6 +557,7 @@
         <section id="teams" class="teams-section">
             <div class="container">
                 <h2 class="section-title">Our Teams</h2>
+                <p class="section-subtitle">Eight powerhouse teams competing for glory</p>
                 <div class="teams-grid" id="teamsGrid">
                     <!-- Teams will be loaded dynamically -->
                 </div>
@@ -460,7 +566,7 @@
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p style="color: white; margin-top: 1rem;">Loading teams...</p>
+            <p style="margin-top: 1rem;">Loading teams...</p>
         </div>
     </main>
 
@@ -468,9 +574,7 @@
     <div id="teamModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modalContent">
-                <!-- Dynamic content will be loaded here -->
-            </div>
+            <div id="modalContent"></div>
         </div>
     </div>
 
@@ -562,20 +666,21 @@
         const loading = document.getElementById('loading');
         const teamModal = document.getElementById('teamModal');
         const modalContent = document.getElementById('modalContent');
+        const header = document.getElementById('header');
 
-        // Initialize the page
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadTeams();
             updateStats();
             setupEventListeners();
+            animateStats();
         });
 
-        // Load teams with AJAX simulation
+        // Load teams
         function loadTeams() {
             loading.style.display = 'block';
             teamsGrid.innerHTML = '';
 
-            // Simulate loading delay
             setTimeout(() => {
                 teams.forEach((team, index) => {
                     const teamCard = createTeamCard(team, index);
@@ -585,12 +690,11 @@
             }, 1000);
         }
 
-        // Create team card element
+        // Create team card
         function createTeamCard(team, index) {
             const card = document.createElement('div');
             card.className = 'team-card';
             card.style.animationDelay = `${index * 0.1}s`;
-            card.style.animation = 'fadeInUp 0.6s ease-out both';
             
             card.innerHTML = `
                 <img src="${team.logo}" alt="${team.name}" class="team-logo">
@@ -602,16 +706,16 @@
             return card;
         }
 
-        // Show team details in modal
+        // Show team details modal
         function showTeamDetails(team) {
             modalContent.innerHTML = `
                 <div style="text-align: center; color: white;">
-                    <img src="${team.logo}" alt="${team.name}" style="width: 150px; height: 150px; margin-bottom: 1rem; border-radius: 50%;">
-                    <h2 style="margin-bottom: 1rem;">${team.name}</h2>
-                    <p style="margin-bottom: 2rem; opacity: 0.9;">${team.description}</p>
+                    <img src="${team.logo}" alt="${team.name}" style="width: 150px; height: 150px; margin: 0 auto 2rem; display: block; border-radius: 50%; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
+                    <h2 style="margin-bottom: 1rem; font-size: 2rem; font-weight: 700;">${team.name}</h2>
+                    <p style="margin-bottom: 2rem; opacity: 0.9; line-height: 1.6;">${team.description}</p>
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="${team.page}" class="btn btn-primary" style="text-decoration: none;">Team Info</a>
-                        <a href="${team.players}" class="btn btn-secondary" style="text-decoration: none;">Players</a>
+                        <a href="${team.page}" class="btn btn-primary" style="text-decoration: none;">Team Page</a>
+                        <a href="${team.players}" class="btn btn-secondary" style="text-decoration: none;">View Squad</a>
                     </div>
                 </div>
             `;
@@ -623,20 +727,19 @@
             teamModal.style.display = 'none';
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             if (event.target == teamModal) {
                 closeModal();
             }
         }
 
-        // Update stats with animation
+        // Update statistics
         function updateStats() {
             const stats = {
                 totalMatches: 56,
                 totalTeams: 8,
-                liveMatches: Math.floor(Math.random() * 3),
-                completedMatches: Math.floor(Math.random() * 20)
+                liveMatches: Math.floor(Math.random() * 2),
+                completedMatches: Math.floor(Math.random() * 5)
             };
 
             Object.keys(stats).forEach(key => {
@@ -647,7 +750,17 @@
             });
         }
 
-        // Animate number counting
+        // Animate stats
+        function animateStats() {
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.animation = 'fadeInUp 0.6s ease-out';
+                }, index * 100);
+            });
+        }
+
+        // Animate number
         function animateNumber(element, start, end, duration) {
             const startTime = performance.now();
             const range = end - start;
@@ -668,18 +781,24 @@
 
         // Setup event listeners
         function setupEventListeners() {
-            // Smooth scrolling for navigation links
+            // Smooth scrolling
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 });
+            });
+
+            // Scroll effect on header
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
             });
 
             // Mobile menu toggle
@@ -688,42 +807,6 @@
                 navLinks.classList.toggle('active');
             };
         }
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(0, 0, 0, 0.9)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.1)';
-            }
-        });
-
-        // Add intersection observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all team cards
-        document.addEventListener('DOMContentLoaded', function() {
-            const teamCards = document.querySelectorAll('.team-card');
-            teamCards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
-            });
-        });
     </script>
 </body>
 </html>

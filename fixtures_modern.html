@@ -382,6 +382,10 @@
             <div class="page-header">
                 <h1><i class="fas fa-calendar-alt"></i> Fixtures</h1>
                 <p>Complete IPL 2026 match schedule</p>
+                <div style="background: rgba(255, 193, 7, 0.2); border: 2px solid #ffc107; border-radius: 10px; padding: 1rem; margin-top: 1rem; color: #fff; text-align: center;">
+                    <i class="fas fa-exclamation-triangle" style="color: #ffc107;"></i>
+                    <strong> Note:</strong> Fixtures are tentative and subject to change. The final schedule will be updated once confirmed by IPL authorities.
+                </div>
             </div>
 
             <div class="filters">
@@ -445,6 +449,8 @@
     </main>
 
     <script>
+        // TODO: Load fixtures from Excel/PDF file once schedule is confirmed
+        // Future update: Replace this array with data loaded from a CSV/Excel file
         const fixtures = [
             { match: 1, date: '2026-09-19', team1: 'MI', team2: 'CSK', time: '19:30', status: 'upcoming', venue: 'Wankhede Stadium' },
             { match: 2, date: '2026-09-20', team1: 'DC', team2: 'KXIP', time: '19:30', status: 'upcoming', venue: 'Arun Jaitley Stadium' },

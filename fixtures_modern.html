@@ -363,7 +363,7 @@
     <header>
         <nav class="container">
             <a href="index.html" class="logo">
-                <i class="fas fa-cricket-ball"></i>
+                <img src="ipl_logo.svg" alt="IPL Logo" style="height: 40px; width: 40px; margin-right: 10px;" />
                 <span>IPL 2026</span>
             </a>
             <ul class="nav-links">
@@ -451,33 +451,13 @@
     <script>
         // TODO: Load fixtures from Excel/PDF file once schedule is confirmed
         // Future update: Replace this array with data loaded from a CSV/Excel file
-        const fixtures = [
-            { match: 1, date: '2026-09-19', team1: 'MI', team2: 'CSK', time: '19:30', status: 'upcoming', venue: 'Wankhede Stadium' },
-            { match: 2, date: '2026-09-20', team1: 'DC', team2: 'KXIP', time: '19:30', status: 'upcoming', venue: 'Arun Jaitley Stadium' },
-            { match: 3, date: '2026-09-21', team1: 'SRH', team2: 'RCB', time: '19:30', status: 'upcoming', venue: 'Rajiv Gandhi Stadium' },
-            { match: 4, date: '2026-09-22', team1: 'RR', team2: 'CSK', time: '19:30', status: 'upcoming', venue: 'Sawai Mansingh Stadium' },
-            { match: 5, date: '2026-09-23', team1: 'KKR', team2: 'MI', time: '19:30', status: 'upcoming', venue: 'Eden Gardens' },
-            { match: 6, date: '2026-09-24', team1: 'KXIP', team2: 'RCB', time: '19:30', status: 'upcoming', venue: 'PCA Stadium' },
-            { match: 7, date: '2026-09-25', team1: 'CSK', team2: 'DC', time: '19:30', status: 'upcoming', venue: 'MA Chidambaram Stadium' },
-            { match: 8, date: '2026-09-26', team1: 'KKR', team2: 'SRH', time: '19:30', status: 'upcoming', venue: 'Eden Gardens' },
-            { match: 9, date: '2026-09-27', team1: 'RR', team2: 'KXIP', time: '19:30', status: 'upcoming', venue: 'Sawai Mansingh Stadium' },
-            { match: 10, date: '2026-09-28', team1: 'RCB', team2: 'MI', time: '19:30', status: 'upcoming', venue: 'M Chinnaswamy Stadium' },
-            { match: 11, date: '2026-09-29', team1: 'DC', team2: 'SRH', time: '19:30', status: 'upcoming', venue: 'Arun Jaitley Stadium' },
-            { match: 12, date: '2026-09-30', team1: 'RR', team2: 'KKR', time: '19:30', status: 'upcoming', venue: 'Sawai Mansingh Stadium' },
-            { match: 13, date: '2026-10-01', team1: 'KXIP', team2: 'MI', time: '19:30', status: 'upcoming', venue: 'PCA Stadium' },
-            { match: 14, date: '2026-10-02', team1: 'CSK', team2: 'SRH', time: '19:30', status: 'upcoming', venue: 'MA Chidambaram Stadium' },
-            { match: 15, date: '2026-10-03', team1: 'RCB', team2: 'RR', time: '15:30', status: 'upcoming', venue: 'M Chinnaswamy Stadium' },
-            { match: 16, date: '2026-10-03', team1: 'DC', team2: 'KKR', time: '19:30', status: 'upcoming', venue: 'Arun Jaitley Stadium' },
-            { match: 17, date: '2026-10-04', team1: 'MI', team2: 'SRH', time: '15:30', status: 'upcoming', venue: 'Wankhede Stadium' },
-            { match: 18, date: '2026-10-04', team1: 'KXIP', team2: 'CSK', time: '19:30', status: 'upcoming', venue: 'PCA Stadium' },
-            { match: 19, date: '2026-10-05', team1: 'RCB', team2: 'DC', time: '19:30', status: 'upcoming', venue: 'M Chinnaswamy Stadium' },
-            { match: 20, date: '2026-10-06', team1: 'MI', team2: 'RR', time: '19:30', status: 'upcoming', venue: 'Wankhede Stadium' }
-        ];
+        const fixtures = [];
+        // Fixtures will be populated once confirmed dates are available
 
         const teamLogos = {
-            'RCB': 'rcb_logo.png', 'MI': 'mi_logo.png', 'CSK': 'csk_logo.png',
-            'SRH': 'srh_logo.png', 'KXIP': 'kxip_logo.png', 'KKR': 'kkr_logo.png',
-            'DC': 'dc_logo.png', 'RR': 'rr_logo.png'
+            'RCB': 'rcb_logo_new.svg', 'MI': 'mi_logo_new.svg', 'CSK': 'csk_logo_new.svg',
+            'SRH': 'srh_logo_new.svg', 'PK': 'kxip_logo_new.svg', 'KKR': 'kkr_logo_new.svg',
+            'DC': 'dc_logo_new.svg', 'RR': 'rr_logo_new.svg', 'GT': 'gt_logo_new.svg', 'LSG': 'lsg_logo_new.svg'
         };
 
         const loading = document.getElementById('loading');

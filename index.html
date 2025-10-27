@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IPL 2026 - Indian Premier League</title>
-    <link rel="shortcut icon" href="index.ico" />
+    <link rel="shortcut icon" href="ipl_logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="ipl_logo.svg" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -493,7 +494,7 @@
     <header id="header">
         <nav class="container">
             <a href="#" class="logo">
-                <i class="fas fa-cricket-ball"></i>
+                <img src="ipl_logo.svg" alt="IPL Logo" style="height: 40px; width: 40px; margin-right: 10px;" />
                 <span>IPL 2026</span>
             </a>
             <ul class="nav-links" id="navLinks">
@@ -540,7 +541,7 @@
                         <div class="stat-label">Total Matches</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number" id="totalTeams">8</div>
+                        <div class="stat-number" id="totalTeams">10</div>
                         <div class="stat-label">Teams</div>
                     </div>
                     <div class="stat-card">
@@ -572,7 +573,7 @@
         <section id="teams" class="teams-section">
             <div class="container">
                 <h2 class="section-title">Our Teams</h2>
-                <p class="section-subtitle">Eight powerhouse teams competing for glory</p>
+                <p class="section-subtitle">Ten powerhouse teams competing for glory</p>
                 <div class="teams-grid" id="teamsGrid">
                     <!-- Teams will be loaded with AJAX -->
                 </div>
@@ -591,6 +592,9 @@
         </div>
     </footer>
 
+    <!-- Dynamic Data Service -->
+    <script src="data-service.js"></script>
+    
     <!-- Core JavaScript with AJAX -->
     <script>
         // Team Data Service
@@ -668,6 +672,24 @@
                         players: "rr_players/rr_players.html",
                         color: "#FFD700",
                         description: "Rajasthan Royals is a franchise cricket team based in Jaipur, Rajasthan."
+                    },
+                    {
+                        name: "Gujarat Titans",
+                        shortName: "GT",
+                        logo: "ipl_logo.svg",
+                        page: "gt.html",
+                        players: "gt_players/gt_players.html",
+                        color: "#1B4F72",
+                        description: "Gujarat Titans is a franchise cricket team based in Ahmedabad, Gujarat."
+                    },
+                    {
+                        name: "Lucknow Super Giants",
+                        shortName: "LSG",
+                        logo: "ipl_logo.svg",
+                        page: "lsg.html",
+                        players: "lsg_players/lsg_players.html",
+                        color: "#0081C9",
+                        description: "Lucknow Super Giants is a franchise cricket team based in Lucknow, Uttar Pradesh."
                     }
                 ];
             }

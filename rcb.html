@@ -2,116 +2,333 @@
 <html>
 <head>
 	<title>RCB - IPL2026</title>
-<link rel="icon" type="image/x-icon" href="rcb_logo.png">
-<style type="text/css">
-	
-body {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-	position: relative;
-	overflow-x: hidden;
-}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="rcb_logo.png">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
 
-body::before {
-	content: '';
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: 
-		radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-		radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-	pointer-events: none;
-	z-index: 0;
-}
+		body {
+			font-family: 'Poppins', sans-serif;
+			background: linear-gradient(135deg, #ce1e2c 0%, #6d0000 50%, #1a0000 100%);
+			background-size: 400% 400%;
+			animation: gradient 15s ease infinite;
+			min-height: 100vh;
+			position: relative;
+			overflow-x: hidden;
+			color: white;
+		}
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-h1
-{
-color: #000000;
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+			pointer-events: none;
+			z-index: 0;
+		}
 
-}
-* {
-  padding: 0;
-  margin: 0;
-}
+		@keyframes gradient {
+			0% { background-position: 0% 50%; }
+			50% { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
+		}
 
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 2rem;
+			position: relative;
+			z-index: 1;
+		}
 
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  min-height: 100vh;
-  font-family: Hack, monospace;
-}
+		header {
+			background: rgba(0, 0, 0, 0.3);
+			backdrop-filter: blur(10px);
+			padding: 1.5rem 0;
+			position: sticky;
+			top: 0;
+			z-index: 100;
+			border-bottom: 2px solid #ffd700;
+		}
 
-div {
-  color: #727272;
-  text-align: center;
-}
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 1px;
-  ;
-}
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 2rem;
+		}
 
-li {
-  float: left;
-}
+		.logo {
+			font-size: 1.5rem;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			text-decoration: none;
+			color: white;
+		}
 
-li a {
-  display: block;
-  color: #666;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
+		.nav-links {
+			display: flex;
+			list-style: none;
+			gap: 1.5rem;
+		}
 
-li a:hover:not(.active) {
-  background-color: #ddd;
-}
+		.nav-links a {
+			color: white;
+			text-decoration: none;
+			padding: 0.5rem 1rem;
+			border-radius: 50px;
+			transition: all 0.3s;
+		}
 
-li a.active {
-  color: white;
-}
+		.nav-links a:hover, .nav-links a.active {
+			background: rgba(255, 215, 0, 0.3);
+			transform: translateY(-2px);
+		}
 
-</style></head>
+		.team-header {
+			text-align: center;
+			padding: 3rem 0;
+		}
+
+		.team-logo {
+			width: 200px;
+			height: 200px;
+			margin: 0 auto 1rem;
+			filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+			animation: float 3s ease-in-out infinite;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0px); }
+			50% { transform: translateY(-10px); }
+		}
+
+		.team-name {
+			font-size: 3rem;
+			font-weight: 800;
+			margin-bottom: 0.5rem;
+			color: white;
+		}
+
+		.team-full-name {
+			font-size: 1.2rem;
+			color: rgba(255, 255, 255, 0.9);
+			margin-bottom: 2rem;
+		}
+
+		.trophy-section {
+			background: rgba(255, 215, 0, 0.2);
+			border-radius: 20px;
+			padding: 2rem;
+			margin: 2rem 0;
+			text-align: center;
+			border: 2px solid rgba(255, 215, 0, 0.3);
+		}
+
+		.trophy-section h2 {
+			font-size: 2rem;
+			margin-bottom: 1rem;
+			color: #ffd700;
+		}
+
+		.trophy-info {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 1rem;
+			font-size: 1.2rem;
+		}
+
+		.trophy-icon {
+			font-size: 3rem;
+			color: #ffd700;
+		}
+
+		.trophy-details {
+			text-align: left;
+		}
+
+		.content-section {
+			background: rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			padding: 2rem;
+			margin: 2rem 0;
+		}
+
+		.content-section h2 {
+			font-size: 1.8rem;
+			margin-bottom: 1rem;
+			color: #ffd700;
+		}
+
+		.content-section p {
+			font-size: 1.1rem;
+			line-height: 1.8;
+			color: rgba(255, 255, 255, 0.9);
+			margin-bottom: 1rem;
+		}
+
+		.players-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 1rem;
+			margin-top: 2rem;
+		}
+
+		.player-card {
+			background: rgba(0, 0, 0, 0.3);
+			border-radius: 10px;
+			padding: 1rem;
+			text-align: center;
+			transition: all 0.3s;
+		}
+
+		.player-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+		}
+
+		.player-card img {
+			width: 100%;
+			border-radius: 10px;
+			margin-bottom: 0.5rem;
+		}
+
+		.player-name {
+			font-weight: 600;
+			color: white;
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 1rem 2rem;
+			background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+			color: white;
+			text-decoration: none;
+			border-radius: 50px;
+			font-weight: 600;
+			margin: 0.5rem;
+			transition: all 0.3s;
+		}
+
+		.btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+		}
+
+		@media (max-width: 768px) {
+			.team-name {
+				font-size: 2rem;
+			}
+			.nav-links {
+				flex-wrap: wrap;
+				gap: 0.5rem;
+			}
+			.players-grid {
+				grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+			}
+		}
+	</style>
+</head>
 <body>
-<h1 >RCB</h1>
-<ul>
-   <li><a href="rcb.html">RCB</a></li> 
-  <li><a href="rcb_players/rcb_players.html">RCB Players</a></li>
-  <li><a href="rcb_players/rcb_fixtures.html">RCB Fixtures</a></li>
-    <li><a href="index.html">Home</a></li>
-    </ul>
-    <br>
-    <center>
-    <img src="rcb_logo.png" alt="rcb" width="300" height="300">
-    <p>The Royal Challengers Bangalore are a franchise cricket team based in Bangalore, Karnataka, that plays in the Indian Premier League. It was founded in 2008 by United Spirits and named after the company's liquor brand Royal Challenge. Since its inception, the team has played its home matches at the M. Chinnaswamy Stadium.
-    </p>
-    <p>The Royal Challengers have never won the IPL but finished runners-up on three occasions between 2009 and 2016. Their lack of success over the years despite the presence of various notable players has earned them the tag of "underachievers."[2][3] The team holds the records of both the highest and the lowest totals in the IPL – 263/5 and 49 respectively.
+	<header>
+		<nav>
+			<a href="teams.html" class="logo">
+				<i class="fas fa-arrow-left"></i> Back to Teams
+			</a>
+			<ul class="nav-links">
+				<li><a href="rcb.html" class="active">About</a></li>
+				<li><a href="rcb_players/rcb_players.html">Players</a></li>
+				<li><a href="rcb_players/rcb_fixtures.html">Fixtures</a></li>
+				<li><a href="index.html">Home</a></li>
+			</ul>
+		</nav>
+	</header>
 
-</p>
-<br>
-<br>
-<h3>For latest news about tea visit <a href="https://www.royalchallengers.com/">https://www.royalchallengers.com/</a></h3>
-</center>
+	<div class="container">
+		<div class="team-header">
+			<img src="rcb_logo.png" alt="RCB" class="team-logo">
+			<h1 class="team-name">Royal Challengers Bangalore</h1>
+			<p class="team-full-name">RCB</p>
+		</div>
+
+		<div class="trophy-section">
+			<h2><i class="fas fa-trophy"></i> Trophies & Achievements</h2>
+			<div class="trophy-info">
+				<i class="fas fa-medal trophy-icon"></i>
+				<div class="trophy-details">
+					<div><strong>IPL Titles:</strong> 0</div>
+					<div><strong>Runners-up:</strong> 2009, 2011, 2016</div>
+					<div><strong>Playoff Appearances:</strong> Multiple</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-section">
+			<h2><i class="fas fa-info-circle"></i> About the Team</h2>
+			<p>
+				The Royal Challengers Bangalore (RCB) are a franchise cricket team based in Bangalore, Karnataka, that plays in the Indian Premier League. It was founded in 2008 by United Spirits and named after the company's liquor brand Royal Challenge.
+			</p>
+			<p>
+				Since its inception, the team has played its home matches at the M. Chinnaswamy Stadium. The Royal Challengers have never won the IPL but finished runners-up on three occasions between 2009 and 2016.
+			</p>
+			<p>
+				Their lack of success over the years despite the presence of various notable players has earned them the tag of "underachievers." The team holds the records of both the highest and the lowest totals in the IPL – 263/5 and 49 respectively.
+			</p>
+		</div>
+
+		<div class="content-section">
+			<h2><i class="fas fa-star"></i> Key Players</h2>
+			<div class="players-grid">
+				<div class="player-card">
+					<img src="rcb_players/virat_kohli.png" alt="Virat Kohli">
+					<div class="player-name">Virat Kohli</div>
+				</div>
+				<div class="player-card">
+					<img src="rcb_players/dev.png" alt="Devdutt Padikkal">
+					<div class="player-name">Devdutt Padikkal</div>
+				</div>
+				<div class="player-card">
+					<img src="rcb_players/yuzi.png" alt="Yuzvendra Chahal">
+					<div class="player-name">Yuzvendra Chahal</div>
+				</div>
+				<div class="player-card">
+					<img src="rcb_players/Moeen.png" alt="Moeen Ali">
+					<div class="player-name">Moeen Ali</div>
+				</div>
+			</div>
+			<div style="text-align: center; margin-top: 2rem;">
+				<a href="rcb_players/rcb_players.html" class="btn">
+					<i class="fas fa-users"></i> View All Players
+				</a>
+				<a href="rcb_players/rcb_fixtures.html" class="btn">
+					<i class="fas fa-calendar"></i> View Fixtures
+				</a>
+			</div>
+		</div>
+
+		<div class="content-section">
+			<h2><i class="fas fa-link"></i> Official Links</h2>
+			<p>
+				For latest news about the team visit: 
+				<a href="https://www.royalchallengers.com/" target="_blank" style="color: #ffd700;">
+					https://www.royalchallengers.com/
+				</a>
+			</p>
+		</div>
+	</div>
 </body>
 </html>

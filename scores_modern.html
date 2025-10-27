@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Scores - IPL 2026</title>
+    <link rel="shortcut icon" href="index.ico" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Live Indicator */
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 1px solid #dc3545;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #dc3545;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        /* Match Cards */
+        .matches-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .match-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .match-card.live {
+            border: 2px solid #dc3545;
+            box-shadow: 0 0 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .match-card.completed {
+            opacity: 0.8;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .match-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .match-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-live {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+            border: 1px solid #dc3545;
+            animation: pulse 2s infinite;
+        }
+
+        .status-upcoming {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid #ffc107;
+        }
+
+        .status-completed {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-name {
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+
+        .vs-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 1rem;
+        }
+
+        .vs-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .scores {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+
+        .overs {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.25rem;
+        }
+
+        .match-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1rem;
+        }
+
+        .venue {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Scorecard Details */
+        .scorecard {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .scorecard.active {
+            display: block;
+        }
+
+        .scorecard-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .scorecard-table th,
+        .scorecard-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scorecard-table th {
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Loading and Empty States */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .matches-container {
+                grid-template-columns: 1fr;
+            }
+
+            .match-card {
+                padding: 1.5rem;
+            }
+
+            .teams {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .vs-section {
+                margin: 0;
+            }
+
+            .scores {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .score {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">IPL 2026</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#teams">Teams</a></li>
+                <li><a href="fixtures_modern.html">Fixtures</a></li>
+                <li><a href="points_modern.html">Points Table</a></li>
+                <li><a href="scores_modern.html" class="active">Live Scores</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1>Live Scores</h1>
+                <p>Real-time updates from IPL 2026 matches</p>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>LIVE UPDATES</span>
+                </div>
+            </div>
+
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading live scores...</p>
+            </div>
+
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="fas fa-tv"></i>
+                <h3>No live matches</h3>
+                <p>Check back later for live match updates.</p>
+            </div>
+
+            <div class="matches-container" id="matchesContainer" style="display: none;">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Sample match data
+        const matches = [
+            {
+                id: 1,
+                number: 1,
+                team1: { name: "Mumbai Indians", shortName: "MI", logo: "mi_logo.png" },
+                team2: { name: "Chennai Super Kings", shortName: "CSK", logo: "csk_logo.png" },
+                score1: "185/4",
+                score2: "180/6",
+                overs1: "20.0",
+                overs2: "20.0",
+                status: "completed",
+                venue: "Wankhede Stadium",
+                time: "19:30",
+                date: "2026-09-19",
+                result: "MI won by 5 runs",
+                batsmen1: [
+                    { name: "Rohit Sharma", runs: 65, balls: 45, fours: 8, sixes: 2, sr: 144.44 },
+                    { name: "Suryakumar Yadav", runs: 43, balls: 28, fours: 5, sixes: 1, sr: 153.57 }
+                ],
+                batsmen2: [
+                    { name: "MS Dhoni", runs: 78, balls: 52, fours: 6, sixes: 4, sr: 150.00 },
+                    { name: "Ruturaj Gaikwad", runs: 45, balls: 38, fours: 4, sixes: 1, sr: 118.42 }
+                ],
+                bowlers1: [
+                    { name: "Jasprit Bumrah", overs: 4, maidens: 0, runs: 28, wickets: 2, economy: 7.00 },
+                    { name: "Trent Boult", overs: 4, maidens: 0, runs: 32, wickets: 1, economy: 8.00 }
+                ],
+                bowlers2: [
+                    { name: "Deepak Chahar", overs: 4, maidens: 0, runs: 35, wickets: 2, economy: 8.75 },
+                    { name: "Dwayne Bravo", overs: 4, maidens: 0, runs: 38, wickets: 1, economy: 9.50 }
+                ]
+            },
+            {
+                id: 2,
+                number: 2,
+                team1: { name: "Royal Challengers Bangalore", shortName: "RCB", logo: "rcb_logo.png" },
+                team2: { name: "Sunrisers Hyderabad", shortName: "SRH", logo: "srh_logo.png" },
+                score1: "165/7",
+                score2: "168/4",
+                overs1: "20.0",
+                overs2: "18.2",
+                status: "completed",
+                venue: "M Chinnaswamy Stadium",
+                time: "19:30",
+                date: "2026-09-20",
+                result: "SRH won by 6 wickets",
+                batsmen1: [
+                    { name: "Virat Kohli", runs: 58, balls: 42, fours: 7, sixes: 1, sr: 138.10 },
+                    { name: "AB de Villiers", runs: 45, balls: 32, fours: 4, sixes: 2, sr: 140.63 }
+                ],
+                batsmen2: [
+                    { name: "David Warner", runs: 72, balls: 48, fours: 8, sixes: 2, sr: 150.00 },
+                    { name: "Kane Williamson", runs: 38, balls: 28, fours: 4, sixes: 0, sr: 135.71 }
+                ],
+                bowlers1: [
+                    { name: "Yuzvendra Chahal", overs: 4, maidens: 0, runs: 25, wickets: 2, economy: 6.25 },
+                    { name: "Mohammed Siraj", overs: 4, maidens: 0, runs: 32, wickets: 1, economy: 8.00 }
+                ],
+                bowlers2: [
+                    { name: "Rashid Khan", overs: 4, maidens: 0, runs: 22, wickets: 3, economy: 5.50 },
+                    { name: "Bhuvneshwar Kumar", overs: 4, maidens: 0, runs: 28, wickets: 2, economy: 7.00 }
+                ]
+            },
+            {
+                id: 3,
+                number: 3,
+                team1: { name: "Kolkata Knight Riders", shortName: "KKR", logo: "kkr_logo.png" },
+                team2: { name: "Delhi Capitals", shortName: "DC", logo: "dc_logo.png" },
+                score1: "172/5",
+                score2: "175/3",
+                overs1: "20.0",
+                overs2: "19.1",
+                status: "live",
+                venue: "Eden Gardens",
+                time: "19:30",
+                date: "2026-09-21",
+                result: "DC need 3 runs from 5 balls",
+                batsmen1: [
+                    { name: "Shubman Gill", runs: 68, balls: 45, fours: 8, sixes: 2, sr: 151.11 },
+                    { name: "Andre Russell", runs: 42, balls: 28, fours: 3, sixes: 3, sr: 150.00 }
+                ],
+                batsmen2: [
+                    { name: "Rishabh Pant", runs: 45, balls: 32, fours: 5, sixes: 1, sr: 140.63 },
+                    { name: "Shikhar Dhawan", runs: 38, balls: 28, fours: 4, sixes: 0, sr: 135.71 }
+                ],
+                bowlers1: [
+                    { name: "Pat Cummins", overs: 3.1, maidens: 0, runs: 28, wickets: 1, economy: 8.84 },
+                    { name: "Varun Chakravarthy", overs: 4, maidens: 0, runs: 25, wickets: 2, economy: 6.25 }
+                ],
+                bowlers2: [
+                    { name: "Kagiso Rabada", overs: 4, maidens: 0, runs: 32, wickets: 2, economy: 8.00 },
+                    { name: "Avesh Khan", overs: 4, maidens: 0, runs: 28, wickets: 1, economy: 7.00 }
+                ]
+            }
+        ];
+
+        // DOM elements
+        const loading = document.getElementById('loading');
+        const emptyState = document.getElementById('emptyState');
+        const matchesContainer = document.getElementById('matchesContainer');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMatches();
+            setupEventListeners();
+        });
+
+        // Load matches with AJAX simulation
+        function loadMatches() {
+            loading.style.display = 'block';
+            emptyState.style.display = 'none';
+            matchesContainer.style.display = 'none';
+
+            // Simulate loading delay
+            setTimeout(() => {
+                if (matches.length === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    displayMatches();
+                }
+                loading.style.display = 'none';
+            }, 1000);
+        }
+
+        // Display matches
+        function displayMatches() {
+            matchesContainer.innerHTML = '';
+            matches.forEach(match => {
+                const matchCard = createMatchCard(match);
+                matchesContainer.appendChild(matchCard);
+            });
+            matchesContainer.style.display = 'grid';
+        }
+
+        // Create match card
+        function createMatchCard(match) {
+            const card = document.createElement('div');
+            card.className = `match-card ${match.status}`;
+            card.style.animation = 'fadeIn 0.6s ease-out';
+
+            card.innerHTML = `
+                <div class="match-header">
+                    <span class="match-number">Match #${match.number}</span>
+                    <span class="match-status status-${match.status}">${match.status}</span>
+                </div>
+                
+                <div class="teams">
+                    <div class="team">
+                        <img src="${match.team1.logo}" alt="${match.team1.shortName}" class="team-logo">
+                        <span class="team-name">${match.team1.shortName}</span>
+                    </div>
+                    
+                    <div class="vs-section">
+                        <span class="vs-text">VS</span>
+                    </div>
+                    
+                    <div class="team">
+                        <img src="${match.team2.logo}" alt="${match.team2.shortName}" class="team-logo">
+                        <span class="team-name">${match.team2.shortName}</span>
+                    </div>
+                </div>
+                
+                <div class="scores">
+                    <div class="score">
+                        ${match.score1}
+                        <div class="overs">(${match.overs1})</div>
+                    </div>
+                    <div class="score">
+                        ${match.score2}
+                        <div class="overs">(${match.overs2})</div>
+                    </div>
+                </div>
+                
+                <div class="match-info">
+                    <div class="venue">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${match.venue}</span>
+                    </div>
+                    <div class="time">
+                        <i class="fas fa-clock"></i>
+                        <span>${match.time}</span>
+                    </div>
+                </div>
+                
+                ${match.status === 'completed' ? `<div style="text-align: center; margin-top: 1rem; color: #4ecdc4; font-weight: bold;">${match.result}</div>` : ''}
+                ${match.status === 'live' ? `<div style="text-align: center; margin-top: 1rem; color: #dc3545; font-weight: bold; animation: pulse 2s infinite;">${match.result}</div>` : ''}
+                
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button class="btn btn-primary" onclick="showScorecard(${match.id})">
+                        <i class="fas fa-chart-line"></i> View Scorecard
+                    </button>
+                </div>
+                
+                <div class="scorecard" id="scorecard-${match.id}">
+                    <div style="margin-top: 1rem;">
+                        <h4 style="color: white; margin-bottom: 1rem;">${match.team1.shortName} Batting</h4>
+                        <table class="scorecard-table">
+                            <thead>
+                                <tr>
+                                    <th>Batsman</th>
+                                    <th>R</th>
+                                    <th>B</th>
+                                    <th>4s</th>
+                                    <th>6s</th>
+                                    <th>SR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${match.batsmen1.map(batsman => `
+                                    <tr>
+                                        <td>${batsman.name}</td>
+                                        <td>${batsman.runs}</td>
+                                        <td>${batsman.balls}</td>
+                                        <td>${batsman.fours}</td>
+                                        <td>${batsman.sixes}</td>
+                                        <td>${batsman.sr}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="margin-top: 1rem;">
+                        <h4 style="color: white; margin-bottom: 1rem;">${match.team2.shortName} Bowling</h4>
+                        <table class="scorecard-table">
+                            <thead>
+                                <tr>
+                                    <th>Bowler</th>
+                                    <th>O</th>
+                                    <th>M</th>
+                                    <th>R</th>
+                                    <th>W</th>
+                                    <th>Eco</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${match.bowlers2.map(bowler => `
+                                    <tr>
+                                        <td>${bowler.name}</td>
+                                        <td>${bowler.overs}</td>
+                                        <td>${bowler.maidens}</td>
+                                        <td>${bowler.runs}</td>
+                                        <td>${bowler.wickets}</td>
+                                        <td>${bowler.economy}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Show/hide scorecard
+        function showScorecard(matchId) {
+            const scorecard = document.getElementById(`scorecard-${matchId}`);
+            const isVisible = scorecard.classList.contains('active');
+            
+            // Hide all scorecards first
+            document.querySelectorAll('.scorecard').forEach(sc => sc.classList.remove('active'));
+            
+            // Show the selected one if it wasn't visible
+            if (!isVisible) {
+                scorecard.classList.add('active');
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Add scroll effect to header
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(0, 0, 0, 0.9)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.1)';
+                }
+            });
+
+            // Simulate live updates
+            setInterval(() => {
+                // Update live matches with random score changes
+                const liveMatches = matches.filter(match => match.status === 'live');
+                liveMatches.forEach(match => {
+                    // Simulate score updates
+                    const currentScore = parseInt(match.score1.split('/')[0]);
+                    const newScore = currentScore + Math.floor(Math.random() * 3);
+                    const wickets = match.score1.split('/')[1];
+                    match.score1 = `${newScore}/${wickets}`;
+                    
+                    // Update overs
+                    const currentOvers = parseFloat(match.overs1);
+                    if (currentOvers < 20) {
+                        match.overs1 = (currentOvers + 0.1).toFixed(1);
+                    }
+                });
+                
+                // Refresh display
+                displayMatches();
+            }, 5000); // Every 5 seconds
+        }
+
+        // Make functions globally available
+        window.showScorecard = showScorecard;
+    </script>
+</body>
+</html>

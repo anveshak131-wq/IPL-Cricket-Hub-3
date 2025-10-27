@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL 2026 - Indian Premier League</title>
+    <link rel="shortcut icon" href="index.ico" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Teams Grid */
+        .teams-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .team-card:hover::before {
+            left: 100%;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover .team-logo {
+            transform: scale(1.1);
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-info {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .teams-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        .close {
+            color: white;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">IPL 2026</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#teams">Teams</a></li>
+                <li><a href="fixtures.html">Fixtures</a></li>
+                <li><a href="pointstable.html">Points Table</a></li>
+                <li><a href="score_card.html">Live Scores</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>IPL 2026</h1>
+                <p>Experience the thrill of the Indian Premier League like never before</p>
+                <div class="cta-buttons">
+                    <a href="#teams" class="btn btn-primary">Explore Teams</a>
+                    <a href="fixtures.html" class="btn btn-secondary">View Fixtures</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalMatches">56</span>
+                        <span class="stat-label">Total Matches</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalTeams">8</span>
+                        <span class="stat-label">Teams</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="liveMatches">0</span>
+                        <span class="stat-label">Live Now</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="completedMatches">0</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="teams" class="teams-section">
+            <div class="container">
+                <h2 class="section-title">Our Teams</h2>
+                <div class="teams-grid" id="teamsGrid">
+                    <!-- Teams will be loaded dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: white; margin-top: 1rem;">Loading teams...</p>
+        </div>
+    </main>
+
+    <!-- Team Details Modal -->
+    <div id="teamModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modalContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SportsUP99. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Team data
+        const teams = [
+            {
+                name: "Royal Challengers Bangalore",
+                shortName: "RCB",
+                logo: "rcb_logo.png",
+                page: "rcb.html",
+                players: "rcb_players/rcb_players.html",
+                color: "#D2001A",
+                description: "The Royal Challengers Bangalore are a franchise cricket team based in Bangalore, Karnataka."
+            },
+            {
+                name: "Mumbai Indians",
+                shortName: "MI",
+                logo: "mi_logo.png",
+                page: "mi.html",
+                players: "mi_players/mi_players.html",
+                color: "#004BA0",
+                description: "The Mumbai Indians is a franchise cricket team based Mumbai, Maharashtra."
+            },
+            {
+                name: "Chennai Super Kings",
+                shortName: "CSK",
+                logo: "csk_logo.png",
+                page: "csk.html",
+                players: "csk_players/csk_players.html",
+                color: "#FFD700",
+                description: "Chennai Super Kings is a franchise cricket team based in Chennai, Tamil Nadu."
+            },
+            {
+                name: "Sunrisers Hyderabad",
+                shortName: "SRH",
+                logo: "srh_logo.png",
+                page: "srh.html",
+                players: "srh_players/srh_players.html",
+                color: "#FF6B35",
+                description: "The Sunrisers Hyderabad are a franchise cricket team based in Hyderabad, Telangana."
+            },
+            {
+                name: "Kings XI Punjab",
+                shortName: "KXIP",
+                logo: "kxip_logo.png",
+                page: "kxip.html",
+                players: "kxip_players/kxip_players.html",
+                color: "#ED1C24",
+                description: "Kings XI Punjab is a franchise cricket team based in Mohali, Punjab."
+            },
+            {
+                name: "Kolkata Knight Riders",
+                shortName: "KKR",
+                logo: "kkr_logo.png",
+                page: "kkr.html",
+                players: "kkr_players/kkr_players.html",
+                color: "#2E0854",
+                description: "Kolkata Knight Riders is a franchise cricket team based in Kolkata, West Bengal."
+            },
+            {
+                name: "Delhi Capitals",
+                shortName: "DC",
+                logo: "dc_logo.png",
+                page: "dc.html",
+                players: "dc_players/dc_players.html",
+                color: "#004C93",
+                description: "Delhi Capitals is a franchise cricket team based in New Delhi."
+            },
+            {
+                name: "Rajasthan Royals",
+                shortName: "RR",
+                logo: "rr_logo.png",
+                page: "rr.html",
+                players: "rr_players/rr_players.html",
+                color: "#FFD700",
+                description: "Rajasthan Royals is a franchise cricket team based in Jaipur, Rajasthan."
+            }
+        ];
+
+        // DOM elements
+        const teamsGrid = document.getElementById('teamsGrid');
+        const loading = document.getElementById('loading');
+        const teamModal = document.getElementById('teamModal');
+        const modalContent = document.getElementById('modalContent');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTeams();
+            updateStats();
+            setupEventListeners();
+        });
+
+        // Load teams with AJAX simulation
+        function loadTeams() {
+            loading.style.display = 'block';
+            teamsGrid.innerHTML = '';
+
+            // Simulate loading delay
+            setTimeout(() => {
+                teams.forEach((team, index) => {
+                    const teamCard = createTeamCard(team, index);
+                    teamsGrid.appendChild(teamCard);
+                });
+                loading.style.display = 'none';
+            }, 1000);
+        }
+
+        // Create team card element
+        function createTeamCard(team, index) {
+            const card = document.createElement('div');
+            card.className = 'team-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.animation = 'fadeInUp 0.6s ease-out both';
+            
+            card.innerHTML = `
+                <img src="${team.logo}" alt="${team.name}" class="team-logo">
+                <h3 class="team-name">${team.shortName}</h3>
+                <p class="team-info">${team.name}</p>
+            `;
+
+            card.addEventListener('click', () => showTeamDetails(team));
+            return card;
+        }
+
+        // Show team details in modal
+        function showTeamDetails(team) {
+            modalContent.innerHTML = `
+                <div style="text-align: center; color: white;">
+                    <img src="${team.logo}" alt="${team.name}" style="width: 150px; height: 150px; margin-bottom: 1rem; border-radius: 50%;">
+                    <h2 style="margin-bottom: 1rem;">${team.name}</h2>
+                    <p style="margin-bottom: 2rem; opacity: 0.9;">${team.description}</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="${team.page}" class="btn btn-primary" style="text-decoration: none;">Team Info</a>
+                        <a href="${team.players}" class="btn btn-secondary" style="text-decoration: none;">Players</a>
+                    </div>
+                </div>
+            `;
+            teamModal.style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal() {
+            teamModal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == teamModal) {
+                closeModal();
+            }
+        }
+
+        // Update stats with animation
+        function updateStats() {
+            const stats = {
+                totalMatches: 56,
+                totalTeams: 8,
+                liveMatches: Math.floor(Math.random() * 3),
+                completedMatches: Math.floor(Math.random() * 20)
+            };
+
+            Object.keys(stats).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    animateNumber(element, 0, stats[key], 2000);
+                }
+            });
+        }
+
+        // Animate number counting
+        function animateNumber(element, start, end, duration) {
+            const startTime = performance.now();
+            const range = end - start;
+
+            function updateNumber(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(start + (range * progress));
+                element.textContent = current;
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                }
+            }
+
+            requestAnimationFrame(updateNumber);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            window.toggleMobileMenu = function() {
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.toggle('active');
+            };
+        }
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all team cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const teamCards = document.querySelectorAll('.team-card');
+            teamCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

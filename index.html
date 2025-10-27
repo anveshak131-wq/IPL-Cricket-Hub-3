@@ -7,14 +7,18 @@
     <link rel="shortcut icon" href="index.ico" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ui-components.css">
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --secondary-gradient: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
             --accent-color: #ffd700;
-            --text-light: rgba(255, 255, 255, 0.9);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: rgba(255, 255, 255, 0.95);
+            --solid-bg: rgba(102, 126, 234, 0.95);
+            --nav-bg: rgba(30, 30, 60, 0.98);
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --border-color: rgba(255, 255, 255, 0.3);
         }
 
         * {
@@ -25,28 +29,17 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: var(--primary-gradient);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            background: #1a0f2e;
+            background-image: 
+                linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%),
+                radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.2) 0%, transparent 50%);
+            background-size: 200% 200%;
+            animation: gradientShift 20s ease infinite;
             min-height: 100vh;
             overflow-x: hidden;
             color: white;
             position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
         }
 
         @keyframes gradientShift {
@@ -54,44 +47,16 @@
             50% { background-position: 100% 50%; }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
+        /* Fixed Navigation with Solid Background */
         header {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent-color);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        header.scrolled {
-            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         nav {
@@ -116,6 +81,11 @@
             animation: float 3s ease-in-out infinite;
         }
 
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
@@ -124,23 +94,40 @@
         }
 
         .nav-links a {
-            color: var(--text-light);
+            color: white;
             text-decoration: none;
             padding: 0.7rem 1.5rem;
             border-radius: 50px;
             transition: all 0.3s ease;
-            font-weight: 500;
+            font-weight: 600;
             position: relative;
+            background: transparent;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
         }
 
         .nav-links a:hover {
-            background: var(--glass-bg);
             transform: translateY(-2px);
+            color: white;
         }
 
         .nav-links a.active {
-            background: var(--secondary-gradient);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            color: white;
         }
 
         .mobile-menu {
@@ -169,11 +156,22 @@
             animation: fadeInUp 1s ease-out;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .hero h1 {
             font-size: 4.5rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
             background: linear-gradient(45deg, #fff, var(--accent-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -187,6 +185,7 @@
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .cta-buttons {
@@ -208,27 +207,26 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            color: white;
         }
 
         .btn-primary {
-            background: var(--secondary-gradient);
-            color: white;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
 
         .btn-secondary {
-            background: var(--glass-bg);
-            color: white;
-            border: 2px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-3px);
         }
 
@@ -245,19 +243,20 @@
         }
 
         .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
-            border: 1px solid var(--glass-border);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
             animation: fadeInUp 0.8s ease-out;
         }
 
         .stat-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .stat-number {
@@ -269,7 +268,7 @@
 
         .stat-label {
             font-size: 1rem;
-            color: var(--text-light);
+            color: white;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -284,13 +283,14 @@
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            color: white;
         }
 
         .section-subtitle {
             text-align: center;
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: white;
             margin-bottom: 3rem;
         }
 
@@ -302,13 +302,13 @@
         }
 
         .team-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 2rem;
             text-align: center;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid var(--glass-border);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -332,8 +332,9 @@
 
         .team-card:hover {
             transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .team-logo {
@@ -343,7 +344,7 @@
             border-radius: 50%;
             object-fit: contain;
             transition: transform 0.4s ease;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
         }
 
         .team-card:hover .team-logo {
@@ -354,24 +355,45 @@
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+            color: white;
         }
 
         .team-info {
-            color: var(--text-light);
+            color: white;
             font-size: 1rem;
         }
 
-        /* Footer */
-        footer {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-            border-top: 1px solid var(--glass-border);
+        /* AI Prediction Section */
+        .ai-section {
+            padding: 4rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            margin: 3rem 0;
         }
 
-        /* Loading Animation */
+        .ai-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(240, 147, 251, 0.3));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .prediction-box {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .prediction-box i {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
         .loading {
             display: none;
             text-align: center;
@@ -393,44 +415,14 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: var(--primary-gradient);
-            margin: 5% auto;
-            padding: 3rem;
-            border-radius: 30px;
-            width: 90%;
-            max-width: 700px;
-            position: relative;
-            border: 1px solid var(--glass-border);
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .close {
-            color: white;
-            font-size: 2.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .close:hover {
-            transform: rotate(90deg);
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         /* Responsive Design */
@@ -441,10 +433,11 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: rgba(0, 0, 0, 0.95);
+                background: var(--nav-bg);
                 flex-direction: column;
                 padding: 2rem;
                 gap: 1rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             }
 
             .nav-links.active {
@@ -485,6 +478,14 @@
             .team-card {
                 padding: 1.5rem;
             }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -554,29 +555,35 @@
             </div>
         </section>
 
+        <section class="ai-section">
+            <div class="container">
+                <h2 class="section-title">🤖 AI Match Predictions</h2>
+                <p class="section-subtitle">Powered by AI to predict match outcomes based on team stats and performance</p>
+                <div class="ai-card">
+                    <button onclick="generateAIPrediction()" class="btn btn-primary">
+                        <i class="fas fa-robot"></i>
+                        Get AI Prediction
+                    </button>
+                    <div id="aiResults"></div>
+                </div>
+            </div>
+        </section>
+
         <section id="teams" class="teams-section">
             <div class="container">
                 <h2 class="section-title">Our Teams</h2>
                 <p class="section-subtitle">Eight powerhouse teams competing for glory</p>
                 <div class="teams-grid" id="teamsGrid">
-                    <!-- Teams will be loaded dynamically -->
+                    <!-- Teams will be loaded with AJAX -->
                 </div>
             </div>
         </section>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p style="margin-top: 1rem;">Loading teams...</p>
+            <p style="margin-top: 1rem; color: white;">Loading teams...</p>
         </div>
     </main>
-
-    <!-- Team Details Modal -->
-    <div id="teamModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modalContent"></div>
-        </div>
-    </div>
 
     <footer>
         <div class="container">
@@ -584,229 +591,277 @@
         </div>
     </footer>
 
+    <!-- Core JavaScript with AJAX -->
     <script>
-        // Team data
-        const teams = [
-            {
-                name: "Royal Challengers Bangalore",
-                shortName: "RCB",
-                logo: "rcb_logo.png",
-                page: "rcb.html",
-                players: "rcb_players/rcb_players.html",
-                color: "#D2001A",
-                description: "The Royal Challengers Bangalore are a franchise cricket team based in Bangalore, Karnataka."
-            },
-            {
-                name: "Mumbai Indians",
-                shortName: "MI",
-                logo: "mi_logo.png",
-                page: "mi.html",
-                players: "mi_players/mi_players.html",
-                color: "#004BA0",
-                description: "The Mumbai Indians is a franchise cricket team based Mumbai, Maharashtra."
-            },
-            {
-                name: "Chennai Super Kings",
-                shortName: "CSK",
-                logo: "csk_logo.png",
-                page: "csk.html",
-                players: "csk_players/csk_players.html",
-                color: "#FFD700",
-                description: "Chennai Super Kings is a franchise cricket team based in Chennai, Tamil Nadu."
-            },
-            {
-                name: "Sunrisers Hyderabad",
-                shortName: "SRH",
-                logo: "srh_logo.png",
-                page: "srh.html",
-                players: "srh_players/srh_players.html",
-                color: "#FF6B35",
-                description: "The Sunrisers Hyderabad are a franchise cricket team based in Hyderabad, Telangana."
-            },
-            {
-                name: "Kings XI Punjab",
-                shortName: "KXIP",
-                logo: "kxip_logo.png",
-                page: "kxip.html",
-                players: "kxip_players/kxip_players.html",
-                color: "#ED1C24",
-                description: "Kings XI Punjab is a franchise cricket team based in Mohali, Punjab."
-            },
-            {
-                name: "Kolkata Knight Riders",
-                shortName: "KKR",
-                logo: "kkr_logo.png",
-                page: "kkr.html",
-                players: "kkr_players/kkr_players.html",
-                color: "#2E0854",
-                description: "Kolkata Knight Riders is a franchise cricket team based in Kolkata, West Bengal."
-            },
-            {
-                name: "Delhi Capitals",
-                shortName: "DC",
-                logo: "dc_logo.png",
-                page: "dc.html",
-                players: "dc_players/dc_players.html",
-                color: "#004C93",
-                description: "Delhi Capitals is a franchise cricket team based in New Delhi."
-            },
-            {
-                name: "Rajasthan Royals",
-                shortName: "RR",
-                logo: "rr_logo.png",
-                page: "rr.html",
-                players: "rr_players/rr_players.html",
-                color: "#FFD700",
-                description: "Rajasthan Royals is a franchise cricket team based in Jaipur, Rajasthan."
+        // Team Data Service
+        class TeamService {
+            constructor() {
+                this.teams = [
+                    {
+                        name: "Royal Challengers Bangalore",
+                        shortName: "RCB",
+                        logo: "rcb_logo.png",
+                        page: "rcb.html",
+                        players: "rcb_players/rcb_players.html",
+                        color: "#D2001A",
+                        description: "The Royal Challengers Bangalore are a franchise cricket team based in Bangalore, Karnataka."
+                    },
+                    {
+                        name: "Mumbai Indians",
+                        shortName: "MI",
+                        logo: "mi_logo.png",
+                        page: "mi.html",
+                        players: "mi_players/mi_players.html",
+                        color: "#004BA0",
+                        description: "The Mumbai Indians is a franchise cricket team based Mumbai, Maharashtra."
+                    },
+                    {
+                        name: "Chennai Super Kings",
+                        shortName: "CSK",
+                        logo: "csk_logo.png",
+                        page: "csk.html",
+                        players: "csk_players/csk_players.html",
+                        color: "#FFD700",
+                        description: "Chennai Super Kings is a franchise cricket team based in Chennai, Tamil Nadu."
+                    },
+                    {
+                        name: "Sunrisers Hyderabad",
+                        shortName: "SRH",
+                        logo: "srh_logo.png",
+                        page: "srh.html",
+                        players: "srh_players/srh_players.html",
+                        color: "#FF6B35",
+                        description: "The Sunrisers Hyderabad are a franchise cricket team based in Hyderabad, Telangana."
+                    },
+                    {
+                        name: "Kings XI Punjab",
+                        shortName: "KXIP",
+                        logo: "kxip_logo.png",
+                        page: "kxip.html",
+                        players: "kxip_players/kxip_players.html",
+                        color: "#ED1C24",
+                        description: "Kings XI Punjab is a franchise cricket team based in Mohali, Punjab."
+                    },
+                    {
+                        name: "Kolkata Knight Riders",
+                        shortName: "KKR",
+                        logo: "kkr_logo.png",
+                        page: "kkr.html",
+                        players: "kkr_players/kkr_players.html",
+                        color: "#2E0854",
+                        description: "Kolkata Knight Riders is a franchise cricket team based in Kolkata, West Bengal."
+                    },
+                    {
+                        name: "Delhi Capitals",
+                        shortName: "DC",
+                        logo: "dc_logo.png",
+                        page: "dc.html",
+                        players: "dc_players/dc_players.html",
+                        color: "#004C93",
+                        description: "Delhi Capitals is a franchise cricket team based in New Delhi."
+                    },
+                    {
+                        name: "Rajasthan Royals",
+                        shortName: "RR",
+                        logo: "rr_logo.png",
+                        page: "rr.html",
+                        players: "rr_players/rr_players.html",
+                        color: "#FFD700",
+                        description: "Rajasthan Royals is a franchise cricket team based in Jaipur, Rajasthan."
+                    }
+                ];
             }
-        ];
 
-        // DOM elements
-        const teamsGrid = document.getElementById('teamsGrid');
-        const loading = document.getElementById('loading');
-        const teamModal = document.getElementById('teamModal');
-        const modalContent = document.getElementById('modalContent');
-        const header = document.getElementById('header');
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTeams();
-            updateStats();
-            setupEventListeners();
-            animateStats();
-        });
-
-        // Load teams
-        function loadTeams() {
-            loading.style.display = 'block';
-            teamsGrid.innerHTML = '';
-
-            setTimeout(() => {
-                teams.forEach((team, index) => {
-                    const teamCard = createTeamCard(team, index);
-                    teamsGrid.appendChild(teamCard);
+            // Simulated AJAX call
+            async fetchTeams() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(this.teams);
+                    }, 800);
                 });
-                loading.style.display = 'none';
-            }, 1000);
-        }
-
-        // Create team card
-        function createTeamCard(team, index) {
-            const card = document.createElement('div');
-            card.className = 'team-card';
-            card.style.animationDelay = `${index * 0.1}s`;
-            
-            card.innerHTML = `
-                <img src="${team.logo}" alt="${team.name}" class="team-logo">
-                <h3 class="team-name">${team.shortName}</h3>
-                <p class="team-info">${team.name}</p>
-            `;
-
-            card.addEventListener('click', () => showTeamDetails(team));
-            return card;
-        }
-
-        // Show team details modal
-        function showTeamDetails(team) {
-            modalContent.innerHTML = `
-                <div style="text-align: center; color: white;">
-                    <img src="${team.logo}" alt="${team.name}" style="width: 150px; height: 150px; margin: 0 auto 2rem; display: block; border-radius: 50%; box-shadow: 0 15px 30px rgba(0,0,0,0.3);">
-                    <h2 style="margin-bottom: 1rem; font-size: 2rem; font-weight: 700;">${team.name}</h2>
-                    <p style="margin-bottom: 2rem; opacity: 0.9; line-height: 1.6;">${team.description}</p>
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="${team.page}" class="btn btn-primary" style="text-decoration: none;">Team Page</a>
-                        <a href="${team.players}" class="btn btn-secondary" style="text-decoration: none;">View Squad</a>
-                    </div>
-                </div>
-            `;
-            teamModal.style.display = 'block';
-        }
-
-        // Close modal
-        function closeModal() {
-            teamModal.style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            if (event.target == teamModal) {
-                closeModal();
             }
         }
 
-        // Update statistics
-        function updateStats() {
-            const stats = {
-                totalMatches: 56,
-                totalTeams: 8,
-                liveMatches: Math.floor(Math.random() * 2),
-                completedMatches: Math.floor(Math.random() * 5)
-            };
+        // AI Prediction Service
+        class AIService {
+            constructor() {
+                this.predictions = [
+                    { winner: "MI", confidence: 75, reason: "Strong bowling attack and depth in batting lineup" },
+                    { winner: "CSK", confidence: 68, reason: "Experienced squad with excellent fielding stats" },
+                    { winner: "RCB", confidence: 82, reason: "Explosive top order and home ground advantage" },
+                    { winner: "SRH", confidence: 71, reason: "Balanced team with strong all-rounders" }
+                ];
+            }
 
-            Object.keys(stats).forEach(key => {
-                const element = document.getElementById(key);
-                if (element) {
-                    animateNumber(element, 0, stats[key], 2000);
-                }
-            });
+            async predictNextMatch() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        const match = {
+                            team1: "MI",
+                            team2: "CSK",
+                            prediction: this.predictions[Math.floor(Math.random() * this.predictions.length)]
+                        };
+                        resolve(match);
+                    }, 1500);
+                });
+            }
         }
 
-        // Animate stats
-        function animateStats() {
-            const statCards = document.querySelectorAll('.stat-card');
-            statCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.animation = 'fadeInUp 0.6s ease-out';
-                }, index * 100);
-            });
-        }
+        // Main Application
+        class IPLApp {
+            constructor() {
+                this.teamService = new TeamService();
+                this.aiService = new AIService();
+                this.init();
+            }
 
-        // Animate number
-        function animateNumber(element, start, end, duration) {
-            const startTime = performance.now();
-            const range = end - start;
+            init() {
+                document.addEventListener('DOMContentLoaded', () => {
+                    this.loadTeams();
+                    this.updateStats();
+                    this.setupEventListeners();
+                    this.animateStats();
+                });
+            }
 
-            function updateNumber(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const current = Math.floor(start + (range * progress));
-                element.textContent = current;
+            async loadTeams() {
+                const loading = document.getElementById('loading');
+                const teamsGrid = document.getElementById('teamsGrid');
+                
+                loading.style.display = 'block';
+                teamsGrid.innerHTML = '';
 
-                if (progress < 1) {
-                    requestAnimationFrame(updateNumber);
+                try {
+                    const teams = await this.teamService.fetchTeams();
+                    
+                    teams.forEach((team, index) => {
+                        const teamCard = this.createTeamCard(team, index);
+                        teamsGrid.appendChild(teamCard);
+                    });
+                } catch (error) {
+                    console.error('Error loading teams:', error);
+                } finally {
+                    loading.style.display = 'none';
                 }
             }
 
-            requestAnimationFrame(updateNumber);
-        }
+            createTeamCard(team, index) {
+                const card = document.createElement('div');
+                card.className = 'team-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <img src="${team.logo}" alt="${team.name}" class="team-logo">
+                    <h3 class="team-name">${team.shortName}</h3>
+                    <p class="team-info">${team.name}</p>
+                `;
 
-        // Setup event listeners
-        function setupEventListeners() {
-            // Smooth scrolling
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                card.addEventListener('click', () => window.location.href = team.page);
+                return card;
+            }
+
+            updateStats() {
+                const stats = {
+                    totalMatches: 56,
+                    totalTeams: 8,
+                    liveMatches: Math.floor(Math.random() * 2),
+                    completedMatches: Math.floor(Math.random() * 10)
+                };
+
+                Object.keys(stats).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        this.animateNumber(element, 0, stats[key], 2000);
                     }
                 });
-            });
+            }
 
-            // Scroll effect on header
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
+            animateNumber(element, start, end, duration) {
+                const startTime = performance.now();
+                const range = end - start;
 
-            // Mobile menu toggle
-            window.toggleMobileMenu = function() {
-                const navLinks = document.getElementById('navLinks');
-                navLinks.classList.toggle('active');
-            };
+                const updateNumber = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const current = Math.floor(start + (range * progress));
+                    element.textContent = current;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(updateNumber);
+                    }
+                };
+
+                requestAnimationFrame(updateNumber);
+            }
+
+            animateStats() {
+                const statCards = document.querySelectorAll('.stat-card');
+                statCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.animation = 'fadeInUp 0.6s ease-out';
+                    }, index * 100);
+                });
+            }
+
+            setupEventListeners() {
+                // Smooth scrolling
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+
+                // Scroll effect on header
+                window.addEventListener('scroll', () => {
+                    const header = document.getElementById('header');
+                    if (window.scrollY > 100) {
+                        header.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.5)';
+                    } else {
+                        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+                    }
+                });
+            }
         }
+
+        // AI Prediction Function
+        async function generateAIPrediction() {
+            const aiResults = document.getElementById('aiResults');
+            const aiService = new AIService();
+            
+            aiResults.innerHTML = '<div class="spinner"></div><p style="margin-top: 1rem;">AI is analyzing...</p>';
+            
+            try {
+                const prediction = await aiService.predictNextMatch();
+                aiResults.innerHTML = `
+                    <div class="prediction-box">
+                        <i class="fas fa-brain"></i>
+                        <div>
+                            <h3 style="margin-bottom: 0.5rem;">Match: ${prediction.team1} vs ${prediction.team2}</h3>
+                            <p style="margin-bottom: 0.5rem;"><strong>Predicted Winner:</strong> ${prediction.prediction.winner}</p>
+                            <p style="margin-bottom: 0.5rem;"><strong>Confidence:</strong> ${prediction.prediction.confidence}%</p>
+                            <p><strong>Reason:</strong> ${prediction.prediction.reason}</p>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                aiResults.innerHTML = '<p style="color: #ff6b6b;">Error generating prediction. Please try again.</p>';
+            }
+        }
+
+        // Mobile Menu Toggle
+        window.toggleMobileMenu = function() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            window.iplApp = new IPLApp();
+        });
     </script>
 </body>
 </html>

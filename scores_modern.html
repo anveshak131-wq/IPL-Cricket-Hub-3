@@ -86,8 +86,9 @@
             gap: 0.5rem;
         }
 
-        .logo i {
-            color: var(--accent-color);
+        .logo img {
+            height: 40px;
+            width: 40px;
         }
 
         .nav-links {
@@ -207,8 +208,14 @@
         }
 
         .match-card.live {
-            border: 2px solid #dc3545;
-            box-shadow: 0 0 30px rgba(220, 53, 69, 0.3);
+            border: 3px solid #dc3545;
+            box-shadow: 0 0 40px rgba(220, 53, 69, 0.4);
+            animation: liveGlow 2s infinite;
+        }
+
+        @keyframes liveGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(220, 53, 69, 0.4); }
+            50% { box-shadow: 0 0 60px rgba(220, 53, 69, 0.6); }
         }
 
         .match-header {
@@ -354,6 +361,16 @@
             100% { transform: rotate(360deg); }
         }
 
+        .section-header {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 3rem 0 2rem;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -386,7 +403,7 @@
     <header>
         <nav class="container">
             <a href="index.html" class="logo">
-                <img src="ipl_logo.svg" alt="IPL Logo" style="height: 40px; width: 40px; margin-right: 10px;" />
+                <img src="ipl_logo_new.svg" alt="IPL Logo" />
                 <span>IPL 2026</span>
             </a>
             <ul class="nav-links">
@@ -407,16 +424,18 @@
                 <p>Real-time match updates</p>
                 <div class="live-indicator">
                     <div class="live-dot"></div>
-                    <span>LIVE UPDATES</span>
+                    <span>AUTO-UPDATING EVERY 30 SECONDS</span>
                 </div>
             </div>
 
-            <div id="loading" class="loading">
+            <div id="loading" class="loading" style="display: none;">
                 <div class="spinner"></div>
                 <p>Loading live scores...</p>
             </div>
 
-            <div id="matchesGrid" class="matches-grid" style="display: none;"></div>
+            <div id="liveMatches" style="margin-bottom: 2rem;"></div>
+            <div id="upcomingMatches" style="margin-bottom: 2rem;"></div>
+            <div id="completedMatches"></div>
         </div>
     </main>
 
@@ -425,57 +444,139 @@
             {
                 id: 1,
                 number: 1,
-                team1: { name: "Mumbai Indians", shortName: "MI", logo: "mi_logo_new.svg", score: "185/4", overs: "20.0" },
-                team2: { name: "Chennai Super Kings", shortName: "CSK", logo: "csk_logo_new.svg", score: "180/6", overs: "20.0" },
-                status: "completed",
-                venue: "Wankhede Stadium",
-                time: "19:30"
+                team1: { name: "Chennai Super Kings", shortName: "CSK", logo: "csk_logo_new.svg", score: "0/0", overs: "-" },
+                team2: { name: "Mumbai Indians", shortName: "MI", logo: "mi_logo_new.svg", score: "0/0", overs: "-" },
+                status: "upcoming",
+                venue: "MA Chidambaram Stadium",
+                time: "19:30",
+                date: "2025-03-23"
             },
             {
                 id: 2,
                 number: 2,
-                team1: { name: "Royal Challengers Bangalore", shortName: "RCB", logo: "rcb_logo_new.svg", score: "165/7", overs: "20.0" },
-                team2: { name: "Sunrisers Hyderabad", shortName: "SRH", logo: "srh_logo_new.svg", score: "168/4", overs: "18.2" },
-                status: "completed",
+                team1: { name: "Royal Challengers Bangalore", shortName: "RCB", logo: "rcb_logo_new.svg", score: "168/6", overs: "18.4", liveScore: "168/7" },
+                team2: { name: "Gujarat Titans", shortName: "GT", logo: "gt_logo_new.svg", score: "172/4", overs: "18.2", liveScore: "175/5" },
+                status: "live",
                 venue: "M Chinnaswamy Stadium",
-                time: "19:30"
+                time: "Live"
             },
             {
                 id: 3,
                 number: 3,
-                team1: { name: "Kolkata Knight Riders", shortName: "KKR", logo: "kkr_logo_new.svg", score: "172/5", overs: "20.0" },
-                team2: { name: "Delhi Capitals", shortName: "DC", logo: "dc_logo_new.svg", score: "175/3", overs: "19.1" },
+                team1: { name: "Sunrisers Hyderabad", shortName: "SRH", logo: "srh_logo_new.svg", score: "185/4", overs: "20.0" },
+                team2: { name: "Kolkata Knight Riders", shortName: "KKR", logo: "kkr_logo_new.svg", score: "180/6", overs: "20.0" },
                 status: "completed",
-                venue: "Eden Gardens",
-                time: "19:30"
+                venue: "Rajiv Gandhi Stadium",
+                time: "19:30",
+                date: "2025-03-20"
+            },
+            {
+                id: 4,
+                number: 4,
+                team1: { name: "Delhi Capitals", shortName: "DC", logo: "dc_logo_new.svg", score: "175/5", overs: "20.0" },
+                team2: { name: "Rajasthan Royals", shortName: "RR", logo: "rr_logo_new.svg", score: "176/4", overs: "19.3" },
+                status: "completed",
+                venue: "Arun Jaitley Stadium",
+                time: "19:30",
+                date: "2025-03-21"
+            },
+            {
+                id: 5,
+                number: 5,
+                team1: { name: "Punjab Kings", shortName: "PK", logo: "kxip_logo_new.svg", score: "0/0", overs: "-" },
+                team2: { name: "Lucknow Super Giants", shortName: "LSG", logo: "lsg_logo_new.svg", score: "0/0", overs: "-" },
+                status: "upcoming",
+                venue: "PCA Stadium",
+                time: "15:30",
+                date: "2025-03-24"
+            },
+            {
+                id: 6,
+                number: 6,
+                team1: { name: "Mumbai Indians", shortName: "MI", logo: "mi_logo_new.svg", score: "0/0", overs: "-" },
+                team2: { name: "Gujarat Titans", shortName: "GT", logo: "gt_logo_new.svg", score: "0/0", overs: "-" },
+                status: "upcoming",
+                venue: "Wankhede Stadium",
+                time: "19:30",
+                date: "2025-03-25"
             }
         ];
 
-        const loading = document.getElementById('loading');
-        const matchesGrid = document.getElementById('matchesGrid');
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadMatches();
-        });
-
         function loadMatches() {
-            loading.style.display = 'block';
-            matchesGrid.style.display = 'none';
-
-            setTimeout(() => {
-                matchesGrid.innerHTML = '';
-                matches.forEach(match => {
-                    const matchCard = createMatchCard(match);
-                    matchesGrid.appendChild(matchCard);
-                });
-                loading.style.display = 'none';
-                matchesGrid.style.display = 'grid';
-            }, 1000);
+            const liveMatchesContainer = document.getElementById('liveMatches');
+            const upcomingMatchesContainer = document.getElementById('upcomingMatches');
+            const completedMatchesContainer = document.getElementById('completedMatches');
+            
+            // Sort matches by status priority: live > upcoming > completed
+            const liveMatches = matches.filter(m => m.status === 'live');
+            const upcomingMatches = matches.filter(m => m.status === 'upcoming');
+            const completedMatches = matches.filter(m => m.status === 'completed');
+            
+            // Clear containers
+            liveMatchesContainer.innerHTML = '';
+            upcomingMatchesContainer.innerHTML = '';
+            completedMatchesContainer.innerHTML = '';
+            
+            // Add section headers if there are matches
+            if (liveMatches.length > 0) {
+                const liveHeader = document.createElement('h2');
+                liveHeader.className = 'section-header';
+                liveHeader.innerHTML = '<i class="fas fa-circle" style="color: #dc3545;"></i> LIVE MATCHES';
+                liveMatchesContainer.appendChild(liveHeader);
+            }
+            
+            if (upcomingMatches.length > 0) {
+                const upcomingHeader = document.createElement('h2');
+                upcomingHeader.className = 'section-header';
+                upcomingHeader.innerHTML = '<i class="fas fa-clock"></i> UPCOMING';
+                upcomingMatchesContainer.appendChild(upcomingHeader);
+            }
+            
+            if (completedMatches.length > 0) {
+                const completedHeader = document.createElement('h2');
+                completedHeader.className = 'section-header';
+                completedHeader.innerHTML = '<i class="fas fa-check-circle"></i> COMPLETED';
+                completedMatchesContainer.appendChild(completedHeader);
+            }
+            
+            // Create grids for each section
+            const liveGrid = document.createElement('div');
+            liveGrid.className = 'matches-grid';
+            
+            const upcomingGrid = document.createElement('div');
+            upcomingGrid.className = 'matches-grid';
+            
+            const completedGrid = document.createElement('div');
+            completedGrid.className = 'matches-grid';
+            
+            // Populate each grid
+            liveMatches.forEach(match => {
+                liveGrid.appendChild(createMatchCard(match, true)); // true for live animation
+            });
+            
+            upcomingMatches.forEach(match => {
+                upcomingGrid.appendChild(createMatchCard(match, false));
+            });
+            
+            completedMatches.forEach(match => {
+                completedGrid.appendChild(createMatchCard(match, false));
+            });
+            
+            // Append grids to containers
+            if (liveMatches.length > 0) liveMatchesContainer.appendChild(liveGrid);
+            if (upcomingMatches.length > 0) upcomingMatchesContainer.appendChild(upcomingGrid);
+            if (completedMatches.length > 0) completedMatchesContainer.appendChild(completedGrid);
         }
 
-        function createMatchCard(match) {
+        function createMatchCard(match, isLive = false) {
             const card = document.createElement('div');
             card.className = `match-card ${match.status}`;
+            if (isLive) card.classList.add('live-updating');
+
+            const displayScore1 = match.team1.liveScore || match.team1.score;
+            const displayScore2 = match.team2.liveScore || match.team2.score;
+            const displayOvers1 = match.team1.overs === '-' ? '-' : (match.team1.liveScore ? match.team1.overs : match.team1.overs);
+            const displayOvers2 = match.team2.overs === '-' ? '-' : (match.team2.liveScore ? match.team2.overs : match.team2.overs);
 
             card.innerHTML = `
                 <div class="match-header">
@@ -497,12 +598,12 @@
                 
                 <div class="scores">
                     <div>
-                        <div class="score">${match.team1.score}</div>
-                        <div class="overs">${match.team1.overs}</div>
+                        <div class="score">${displayScore1}</div>
+                        <div class="overs">${displayOvers1}</div>
                     </div>
                     <div>
-                        <div class="score">${match.team2.score}</div>
-                        <div class="overs">${match.team2.overs}</div>
+                        <div class="score">${displayScore2}</div>
+                        <div class="overs">${displayOvers2}</div>
                     </div>
                 </div>
                 
@@ -524,6 +625,33 @@
 
             return card;
         }
+
+        // Auto-refresh function for live scores
+        function startAutoRefresh() {
+            setInterval(() => {
+                if (matches.some(m => m.status === 'live')) {
+                    // Simulate score updates for live matches
+                    matches.forEach(match => {
+                        if (match.status === 'live') {
+                            // Simulate ball-by-ball updates
+                            const currentScore1 = parseInt(match.team1.liveScore || match.team1.score.split('/')[0]);
+                            const currentScore2 = parseInt(match.team2.liveScore || match.team2.score.split('/')[0]);
+                            
+                            // Random score increment
+                            match.team1.liveScore = (currentScore1 + Math.floor(Math.random() * 2) + 1) + '/' + (parseInt(match.team1.score.split('/')[1]) || 0);
+                            
+                            // Reload display for live matches
+                            loadMatches();
+                        }
+                    });
+                }
+            }, 30000); // Update every 30 seconds
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMatches();
+            startAutoRefresh();
+        });
     </script>
 </body>
 </html>

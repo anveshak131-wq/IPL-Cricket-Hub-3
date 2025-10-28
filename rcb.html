@@ -247,6 +247,47 @@
 			color: white;
 		}
 
+		.uploaded-players {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+			gap: 1rem;
+			margin-top: 1.5rem;
+		}
+
+		.player-item {
+			background: rgba(0, 0, 0, 0.3);
+			border-radius: 10px;
+			padding: 1rem;
+			text-align: center;
+			transition: all 0.3s;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.player-item:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+			background: rgba(0, 0, 0, 0.4);
+		}
+
+		.player-item .role {
+			font-size: 0.85rem;
+			color: #ffd700;
+			margin-top: 0.3rem;
+		}
+
+		.player-item .name {
+			font-weight: 600;
+			color: white;
+			font-size: 0.95rem;
+		}
+
+		.no-players-message {
+			text-align: center;
+			padding: 2rem;
+			color: rgba(255, 255, 255, 0.6);
+			font-style: italic;
+		}
+
 		.btn {
 			display: inline-block;
 			padding: 1rem 2rem;
@@ -332,15 +373,10 @@
 		</div>
 
             <div class="content-section">
-                <h2><i class="fas fa-users"></i> Complete Squad</h2>
-                <p style="text-align: center; margin-bottom: 1.5rem;">
-                    <a href="rcb_players/rcb_players_modern.html" style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 1.1rem; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5); transition: all 0.3s;">
-                        <i class="fas fa-users"></i> View Complete Squad
-                    </a>
-                </p>
-                <p style="text-align: center; font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">
-                    Click above to view all RCB players with detailed stats
-                </p>
+                <h2><i class="fas fa-users"></i> Squad</h2>
+                <div id="uploadedPlayers">
+                    <div class="no-players-message">Loading players...</div>
+                </div>
             </div>
 
 		<div class="content-section">
@@ -354,5 +390,54 @@
 		</div>
 		</div>
 	</main>
+
+	<script>
+		// Load uploaded players from localStorage
+		document.addEventListener('DOMContentLoaded', function() {
+			const playersContainer = document.getElementById('uploadedPlayers');
+			
+			try {
+				// Get players from localStorage (key format: uploaded_rcb_players)
+				const key = 'uploaded_rcb_players';
+				const playersData = localStorage.getItem(key);
+				
+				console.log('Checking localStorage key:', key);
+				console.log('Players data:', playersData);
+				
+				if (playersData) {
+					const players = JSON.parse(playersData);
+					console.log('Parsed players:', players);
+					
+					if (players && players.length > 0) {
+						let html = '<div class="uploaded-players">';
+						
+						players.forEach(player => {
+							console.log('Processing player:', player);
+							// Try all possible key variations
+							const playerName = player.name || player.Name || 'Unknown Player';
+							const playerRole = player.role || player.Role || 'Player';
+							
+							html += `
+								<div class="player-item">
+									<div class="name">${playerName}</div>
+									<div class="role">${playerRole}</div>
+								</div>
+							`;
+						});
+						
+						html += '</div>';
+						playersContainer.innerHTML = html;
+					} else {
+						playersContainer.innerHTML = '<div class="no-players-message">No players uploaded yet. Go to <a href="admin-upload.html" style="color: #ffd700;">Admin Upload</a> to add players.</div>';
+					}
+				} else {
+					playersContainer.innerHTML = '<div class="no-players-message">No players uploaded yet. Go to <a href="admin-upload.html" style="color: #ffd700;">Admin Upload</a> to add players.</div>';
+				}
+			} catch (error) {
+				console.error('Error loading players:', error);
+				playersContainer.innerHTML = '<div class="no-players-message">Error loading players. Please try again.</div>';
+			}
+		});
+	</script>
 </body>
 </html>

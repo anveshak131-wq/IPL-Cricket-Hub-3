@@ -453,8 +453,18 @@
                 
                 console.log(`Parsed ${parsedPlayers.length} players for ${team}`);
                 
-                successEl.innerHTML = `<i class="fas fa-check-circle"></i> Players for ${team} uploaded successfully! (${parsedPlayers.length} players loaded)`;
+                successEl.innerHTML = `<i class="fas fa-check-circle"></i> Players for ${team} uploaded successfully! (${parsedPlayers.length} players loaded)<br><small>Data is now live and visible to all users!</small>`;
                 successEl.style.display = 'block';
+                
+                // Trigger custom event so any open team pages can refresh
+                window.dispatchEvent(new CustomEvent('playersUploaded', { 
+                    detail: { team: team.toLowerCase(), count: parsedPlayers.length } 
+                }));
+                
+                // Auto-refresh the page after 2 seconds to show updated data
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             } catch (error) {
                 showError('playersError', 'Upload failed: ' + error.message);
             }

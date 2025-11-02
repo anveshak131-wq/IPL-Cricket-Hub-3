@@ -167,6 +167,35 @@ function deletePlayer(name) {
 }
 
 // ===== FIXTURES MANAGEMENT =====
+const IPL_STADIUMS = [
+    "Wankhede Stadium, Mumbai",
+    "Eden Gardens, Kolkata",
+    "M. Chinnaswamy Stadium, Bengaluru",
+    "Arun Jaitley Stadium, Delhi",
+    "MA Chidambaram Stadium, Chennai",
+    "Rajiv Gandhi International Stadium, Hyderabad",
+    "Punjab Cricket Association Stadium, Mohali",
+    "Sawai Mansingh Stadium, Jaipur",
+    "Narendra Modi Stadium, Ahmedabad",
+    "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+    "Dr DY Patil Sports Academy, Mumbai",
+    "Brabourne Stadium, Mumbai",
+    "Himachal Pradesh Cricket Association Stadium, Dharamsala",
+    "Holkar Cricket Stadium, Indore",
+    "Shaheed Veer Narayan Singh International Stadium, Raipur",
+    "JSCA International Stadium Complex, Ranchi",
+    "IS Bindra Stadium, Mohali",
+    "Barabati Stadium, Cuttack",
+    "Vidarbha Cricket Association Stadium, Nagpur",
+    "Maharashtra Cricket Association Stadium, Pune",
+    "Green Park Stadium, Kanpur",
+    "Sardar Patel Stadium, Ahmedabad",
+    "Dubai International Cricket Stadium, Dubai",
+    "Sheikh Zayed Stadium, Abu Dhabi",
+    "Sharjah Cricket Stadium, Sharjah",
+    "Other"
+];
+
 function addFixtureRow() {
     fixtureCount++;
     const list = document.getElementById('fixturesList');
@@ -179,12 +208,31 @@ function addFixtureRow() {
             <div class="form-group"><label>Date</label><input type="date" class="form-control fixture-date"></div>
             <div class="form-group"><label>Team 1</label><select class="form-control fixture-team1">${TEAM_OPTIONS.map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div>
             <div class="form-group"><label>Team 2</label><select class="form-control fixture-team2">${TEAM_OPTIONS.map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div>
-            <div class="form-group"><label>Venue</label><input type="text" class="form-control fixture-venue" placeholder="Stadium name"></div>
-            <div class="form-group"><label>Time</label><input type="time" class="form-control fixture-time" value="19:30"></div>
+            <div class="form-group">
+                <label>Venue</label>
+                <select class="form-control fixture-venue-select" onchange="handleVenueChange(this, ${fixtureCount})">
+                    <option value="">Select Stadium</option>
+                    ${IPL_STADIUMS.map(s=>`<option value="${s}">${s}</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group" id="custom-venue-${fixtureCount}" style="display:none;">
+                <label>Custom Venue Name</label>
+                <input type="text" class="form-control fixture-venue-custom" placeholder="Enter stadium name">
+            </div>
+            <div class="form-group"><label>Time (IST)</label><input type="time" class="form-control fixture-time" value="19:30"></div>
             <div class="form-group"><label>Status</label><select class="form-control fixture-status">
                 <option value="upcoming">Upcoming</option><option value="live">Live</option><option value="completed">Completed</option></select></div>
         </div>`;
     list.appendChild(row);
+}
+
+function handleVenueChange(select, fixtureId) {
+    const customVenueDiv = document.getElementById(`custom-venue-${fixtureId}`);
+    if (select.value === 'Other') {
+        customVenueDiv.style.display = 'block';
+    } else {
+        customVenueDiv.style.display = 'none';
+    }
 }
 
 function removeFixtureRow(id) { document.getElementById(`fixture-${id}`)?.remove(); }
@@ -195,11 +243,15 @@ function saveFixtures() {
     
     const fixtures = [];
     rows.forEach(row => {
+        const venueSelect = row.querySelector('.fixture-venue-select')?.value || '';
+        const customVenue = row.querySelector('.fixture-venue-custom')?.value || '';
+        const finalVenue = venueSelect === 'Other' ? customVenue : venueSelect;
+        
         fixtures.push({
             date: row.querySelector('.fixture-date')?.value || '',
             team1: row.querySelector('.fixture-team1')?.value || '',
             team2: row.querySelector('.fixture-team2')?.value || '',
-            venue: row.querySelector('.fixture-venue')?.value || '',
+            venue: finalVenue,
             time: row.querySelector('.fixture-time')?.value || '',
             status: row.querySelector('.fixture-status')?.value || 'upcoming'
         });
@@ -213,6 +265,23 @@ function saveFixtures() {
     showFixturesPreview();
 }
 
+function getAutoFixtureStatus(date, time) {
+    if (!date || !time) return 'upcoming';
+    
+    try {
+        const fixtureDateTime = new Date(`${date}T${time}:00+05:30`);
+        const now = new Date();
+        const matchDuration = 4 * 60 * 60 * 1000;
+        const matchEndTime = new Date(fixtureDateTime.getTime() + matchDuration);
+        
+        if (now < fixtureDateTime) return 'upcoming';
+        else if (now >= fixtureDateTime && now <= matchEndTime) return 'live';
+        else return 'completed';
+    } catch (e) {
+        return 'upcoming';
+    }
+}
+
 function showFixturesPreview() {
     const container = document.getElementById('fixturesPreview');
     let fixtures;
@@ -221,9 +290,11 @@ function showFixturesPreview() {
     
     let html = '';
     fixtures.forEach((f, i) => {
+        const autoStatus = getAutoFixtureStatus(f.date, f.time);
+        const statusColor = autoStatus === 'live' ? 'captain' : (autoStatus === 'completed' ? 'wicketkeeper' : 'foreign');
         html += `<div class="player-card"><div class="player-info"><h4>${f.team1} vs ${f.team2}</h4>
-            <p>📅 ${f.date} | ⏰ ${f.time} | 📍 ${f.venue}</p></div>
-            <div class="player-badges"><span class="badge badge-${f.status === 'live' ? 'captain' : 'foreign'}">${f.status.toUpperCase()}</span>
+            <p>📅 ${f.date} | ⏰ ${f.time} IST | 📍 ${f.venue}</p></div>
+            <div class="player-badges"><span class="badge badge-${statusColor}">${autoStatus.toUpperCase()}</span>
             <button class="btn-remove" onclick="deleteFixture(${i})">🗑️</button></div></div>`;
     });
     container.innerHTML = html;

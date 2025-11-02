@@ -25,6 +25,29 @@ const LOGO_MAP = {
     'LSG': 'lsg_logo_new.svg'
 };
 
+// Automatically determine fixture status based on date/time (IST)
+function getAutoStatus(date, time) {
+    if (!date || !time) return 'upcoming';
+    
+    try {
+        const fixtureDateTime = new Date(`${date}T${time}:00+05:30`);
+        const now = new Date();
+        
+        const matchDuration = 4 * 60 * 60 * 1000;
+        const matchEndTime = new Date(fixtureDateTime.getTime() + matchDuration);
+        
+        if (now < fixtureDateTime) {
+            return 'upcoming';
+        } else if (now >= fixtureDateTime && now <= matchEndTime) {
+            return 'live';
+        } else {
+            return 'completed';
+        }
+    } catch (e) {
+        return 'upcoming';
+    }
+}
+
 // Load fixtures from localStorage (uploaded via admin panel)
 function loadFixturesFromStorage() {
     const storedData = localStorage.getItem('uploaded_fixtures');
@@ -50,7 +73,7 @@ function loadFixturesFromStorage() {
             date: fixture.date,
             time: fixture.time,
             venue: fixture.venue,
-            status: fixture.status || 'upcoming'
+            status: getAutoStatus(fixture.date, fixture.time)
         }));
     } catch (e) {
         console.error('Error parsing fixtures data:', e);

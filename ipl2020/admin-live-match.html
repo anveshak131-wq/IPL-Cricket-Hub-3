@@ -243,6 +243,48 @@
                     </div>
                 </div>
 
+                <!-- Toss Information -->
+                <div class="control-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-coins"></i> Toss Information</h3>
+                        <button class="btn-ai" onclick="generateTossInsight()">
+                            <i class="fas fa-magic"></i> AI Insight
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Toss Won By</label>
+                            <select id="tossWinner" class="form-input" onchange="updateTossOptions()">
+                                <option value="">-- Select Winner --</option>
+                            </select>
+                            <small class="form-hint" style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-top: 5px; display: block;">
+                                <i class="fas fa-info-circle"></i> Select teams first to see options
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label>Decision</label>
+                            <select id="tossDecision" class="form-input" onchange="updateTossOptions()">
+                                <option value="">-- Select Decision --</option>
+                                <option value="bat">Chose to Bat</option>
+                                <option value="bowl">Chose to Bowl</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="tossInsightContainer" style="display: none;">
+                            <label>AI-Powered Toss Analysis</label>
+                            <textarea id="tossInsight" rows="3" class="form-textarea" placeholder="AI will analyze pitch conditions, weather, team strength..." readonly></textarea>
+                        </div>
+                        <div id="tossPreview" style="display: none; margin-top: 15px; padding: 15px; background: rgba(255, 215, 0, 0.1); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 10px;">
+                            <div style="font-weight: 600; margin-bottom: 8px; color: #FFD700;">
+                                <i class="fas fa-trophy"></i> Toss Update
+                            </div>
+                            <div id="tossPreviewText" style="font-size: 0.95rem;"></div>
+                        </div>
+                        <button class="btn-submit" onclick="updateToss()">
+                            <i class="fas fa-save"></i> Update Toss
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Team Selection (Manual Override) -->
                 <div class="control-card">
                     <div class="card-header">

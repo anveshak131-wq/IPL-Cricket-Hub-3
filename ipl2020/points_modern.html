@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="assets/ipl_logo_new.svg" />
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/shared-modern.css">
     <link rel="stylesheet" href="css/points-styles.css">
 </head>
@@ -53,7 +54,7 @@
     <section class="page-header">
         <div class="header-container">
             <div class="header-badge">
-                <span>🏆 Season 19 Standings</span>
+                <span><i class="fas fa-trophy"></i> Season 19 Standings</span>
             </div>
             <h1>POINTS TABLE</h1>
             <p>Track team standings, performance metrics, and qualification scenarios. Updated after every match throughout the season.</p>
@@ -65,22 +66,22 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card reveal">
-                    <div class="stat-icon">👑</div>
+                    <div class="stat-icon"><i class="fas fa-crown"></i></div>
                     <div class="stat-number" id="topTeam">TBD</div>
                     <div class="stat-label">League Leader</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-icon">🎯</div>
+                    <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
                     <div class="stat-number" id="matchesPlayed">0</div>
                     <div class="stat-label">Matches Played</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-icon">🔥</div>
+                    <div class="stat-icon"><i class="fas fa-fire"></i></div>
                     <div class="stat-number" id="topNRR">-</div>
                     <div class="stat-label">Highest NRR</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-icon">⚡</div>
+                    <div class="stat-icon"><i class="fas fa-bolt"></i></div>
                     <div class="stat-number" id="qualified">0</div>
                     <div class="stat-label">Qualified</div>
                 </div>
@@ -99,7 +100,7 @@
                         Sort by Points
                     </button>
                     <button class="control-btn" onclick="sortTable('nrr')">
-                        📈
+                        <i class="fas fa-chart-line"></i>
                         Sort by NRR
                     </button>
                 </div>
@@ -164,17 +165,17 @@
             <h2 class="section-title reveal">Qualification Scenarios</h2>
             <div class="scenarios-grid">
                 <div class="scenario-card reveal">
-                    <div class="scenario-icon">🎯</div>
+                    <div class="scenario-icon"><i class="fas fa-bullseye"></i></div>
                     <h3>Top 4 Qualify</h3>
                     <p>Teams finishing in the top 4 positions will advance to the playoffs.</p>
                 </div>
                 <div class="scenario-card reveal">
-                    <div class="scenario-icon">📊</div>
+                    <div class="scenario-icon"><i class="fas fa-chart-bar"></i></div>
                     <h3>Points System</h3>
                     <p>Win = 2 points, Loss = 0 points, No Result = 1 point per team.</p>
                 </div>
                 <div class="scenario-card reveal">
-                    <div class="scenario-icon">⚖️</div>
+                    <div class="scenario-icon"><i class="fas fa-balance-scale"></i></div>
                     <h3>Tiebreaker</h3>
                     <p>If teams are tied on points, Net Run Rate (NRR) determines the rank.</p>
                 </div>
@@ -187,19 +188,19 @@
         <div class="container">
             <div class="actions-grid reveal">
                 <a href="fixtures_modern.html" class="action-card">
-                    <div class="action-icon">📅</div>
+                    <div class="action-icon"><i class="fas fa-calendar-alt"></i></div>
                     <h3>Match Fixtures</h3>
                     <p>View complete schedule</p>
                     →
                 </a>
                 <a href="scores_modern.html" class="action-card">
-                    <div class="action-icon">📊</div>
+                    <div class="action-icon"><i class="fas fa-chart-bar"></i></div>
                     <h3>Live Scores</h3>
                     <p>Real-time match updates</p>
                     →
                 </a>
                 <a href="index.html#teams" class="action-card">
-                    <div class="action-icon">👥</div>
+                    <div class="action-icon"><i class="fas fa-users"></i></div>
                     <h3>Teams</h3>
                     <p>Explore all squads</p>
                     →

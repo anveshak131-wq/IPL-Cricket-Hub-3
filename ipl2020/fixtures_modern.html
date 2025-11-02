@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="assets/ipl_logo_new.svg" />
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/shared-modern.css">
     <link rel="stylesheet" href="css/fixtures-styles.css">
 </head>
@@ -53,7 +54,7 @@
     <section class="page-header">
         <div class="header-container">
             <div class="header-badge">
-                <span>📅 Season 19 Schedule</span>
+                <span><i class="fas fa-calendar-alt"></i> Season 19 Schedule</span>
             </div>
             <h1>MATCH FIXTURES</h1>
             <p>Complete schedule of all IPL matches. Stay updated with match timings, venues, and live match information.</p>
@@ -61,19 +62,19 @@
             <!-- Filter Controls -->
             <div class="filter-controls">
                 <button class="filter-btn active" data-filter="all">
-                    📋
+                    <i class="fas fa-clipboard-list"></i>
                     All Matches
                 </button>
                 <button class="filter-btn" data-filter="upcoming">
-                    ⏰
+                    <i class="fas fa-clock"></i>
                     Upcoming
                 </button>
                 <button class="filter-btn" data-filter="completed">
-                    ✓
+                    <i class="fas fa-check"></i>
                     Completed
                 </button>
                 <button class="filter-btn" data-filter="live">
-                    🔴
+                    <i class="fas fa-circle" style="color:#FF4655"></i>
                     Live
                 </button>
             </div>
@@ -85,22 +86,22 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card reveal">
-                    <div class="stat-icon">🏏</div>
+                    <div class="stat-icon"><i class="fas fa-baseball-ball"></i></div>
                     <div class="stat-number" id="totalMatches">0</div>
                     <div class="stat-label">Total Matches</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-icon">📍</div>
+                    <div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <div class="stat-number" id="venues">TBD</div>
                     <div class="stat-label">Venues</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-icon">📅</div>
+                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
                     <div class="stat-number" id="daysLeft">TBD</div>
                     <div class="stat-label">Days of Cricket</div>
                 </div>
                 <div class="stat-card reveal">
-                    <div class="stat-icon">🔥</div>
+                    <div class="stat-icon"><i class="fas fa-fire"></i></div>
                     <div class="stat-number" id="liveNow">0</div>
                     <div class="stat-label">Live Now</div>
                 </div>
@@ -123,7 +124,7 @@
             
             <!-- Empty State -->
             <div class="empty-state" id="emptyState" style="display: none;">
-                📅
+                <i class="fas fa-calendar-alt"></i>
                 <h3>No Matches Found</h3>
                 <p>Try selecting a different filter</p>
             </div>
@@ -135,19 +136,19 @@
         <div class="container">
             <div class="actions-grid reveal">
                 <a href="points_modern.html" class="action-card">
-                    <div class="action-icon">��</div>
+                    <div class="action-icon"><i class="fas fa-trophy"></i></div>
                     <h3>Points Table</h3>
                     <p>Check team standings</p>
                     →
                 </a>
                 <a href="scores_modern.html" class="action-card">
-                    <div class="action-icon">📊</div>
+                    <div class="action-icon"><i class="fas fa-chart-bar"></i></div>
                     <h3>Live Scores</h3>
                     <p>Real-time match updates</p>
                     →
                 </a>
                 <a href="index.html#teams" class="action-card">
-                    <div class="action-icon">👥</div>
+                    <div class="action-icon"><i class="fas fa-users"></i></div>
                     <h3>Teams</h3>
                     <p>Explore all squads</p>
                     →

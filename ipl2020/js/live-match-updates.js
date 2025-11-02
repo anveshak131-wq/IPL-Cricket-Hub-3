@@ -87,11 +87,11 @@ function enhanceCommentaryWithAI(rawText, over) {
     let context = '';
     
     if (overNum <= 6) {
-        context = '⚡ Powerplay action! ';
+        context = '<i class="fas fa-bolt"></i> Powerplay action! ';
     } else if (overNum >= 16) {
-        context = '🔥 Death overs drama! ';
+        context = '<i class="fas fa-fire"></i> Death overs drama! ';
     } else if (overNum === 10) {
-        context = '📊 Halfway mark! ';
+        context = '<i class="fas fa-chart-bar"></i> Halfway mark! ';
     }
     
     // Add excitement based on keywords
@@ -344,20 +344,20 @@ function postUserComment() {
     
     if (!user) {
         messageEl.className = 'comment-message error';
-        messageEl.textContent = '❌ Please sign in to post a comment';
+        messageEl.innerHTML = '<i class="fas fa-times-circle"></i> Please sign in to post a comment';
         return;
     }
     
     if (!text || text.length < 10) {
         messageEl.className = 'comment-message error';
-        messageEl.textContent = '❌ Comment must be at least 10 characters long';
+        messageEl.innerHTML = '<i class="fas fa-times-circle"></i> Comment must be at least 10 characters long';
         return;
     }
     
     // Check if comment is match-related
     if (!isMatchRelated(text)) {
         messageEl.className = 'comment-message error';
-        messageEl.textContent = '❌ Please post only match-related comments. Your comment should mention teams, players, or match events.';
+        messageEl.innerHTML = '<i class="fas fa-times-circle"></i> Please post only match-related comments. Your comment should mention teams, players, or match events.';
         return;
     }
     
@@ -378,7 +378,7 @@ function postUserComment() {
         
         // Show success message
         messageEl.className = 'comment-message success';
-        messageEl.textContent = '✅ Your comment has been posted successfully!';
+        messageEl.innerHTML = '<i class="fas fa-check-circle"></i> Your comment has been posted successfully!';
         
         // Clear textarea
         document.getElementById('userCommentText').value = '';
@@ -395,7 +395,7 @@ function postUserComment() {
         
     } catch (e) {
         messageEl.className = 'comment-message error';
-        messageEl.textContent = '❌ Error posting comment: ' + e.message;
+        messageEl.innerHTML = '<i class="fas fa-times-circle"></i> Error posting comment: ' + e.message;
     }
 }
 
@@ -474,15 +474,34 @@ function loadMatchInfo() {
     }
 }
 
+// Auto-calculate fixture status based on date/time (IST)
+function getAutoFixtureStatus(date, time) {
+    if (!date || !time) return 'upcoming';
+    try {
+        const fixtureDateTime = new Date(`${date}T${time}:00+05:30`);
+        const now = new Date();
+        const matchDuration = 4 * 60 * 60 * 1000;
+        const matchEndTime = new Date(fixtureDateTime.getTime() + matchDuration);
+        if (now < fixtureDateTime) return 'upcoming';
+        else if (now >= fixtureDateTime && now <= matchEndTime) return 'live';
+        else return 'completed';
+    } catch (e) {
+        return 'upcoming';
+    }
+}
+
 // Show upcoming match info
 function showUpcomingMatch() {
     const scoreboard = document.getElementById('scoreboard');
     if (!scoreboard) return;
     
-    // Get fixtures from localStorage
-    const fixtures = JSON.parse(localStorage.getItem('fixtures') || '[]');
+    // Get fixtures from localStorage (try both keys for compatibility)
+    let fixtures = JSON.parse(localStorage.getItem('uploaded_fixtures') || localStorage.getItem('fixtures') || '[]');
     
-    if (fixtures.length === 0) {
+    // Filter to get only upcoming matches
+    const upcomingFixtures = fixtures.filter(f => getAutoFixtureStatus(f.date, f.time) === 'upcoming');
+    
+    if (upcomingFixtures.length === 0 && fixtures.length === 0) {
         // Show message that fixtures are not confirmed yet
         scoreboard.classList.add('centered-content');
         scoreboard.innerHTML = `
@@ -503,9 +522,9 @@ function showUpcomingMatch() {
             </div>
         `;
     } else {
-        // Show first fixture from the list
+        // Show first upcoming fixture from the list
         scoreboard.classList.remove('centered-content');
-        const nextMatch = fixtures[0];
+        const nextMatch = upcomingFixtures.length > 0 ? upcomingFixtures[0] : fixtures[0];
         scoreboard.innerHTML = `
             <div class="upcoming-match-container">
                 <div class="upcoming-badge">
@@ -591,7 +610,7 @@ postUserComment = function() {
     if (user && checkIfUserBlocked(user.email)) {
         const messageEl = document.getElementById('commentMessage');
         messageEl.className = 'comment-message error';
-        messageEl.textContent = '❌ You have been blocked from posting comments. Please contact support if you believe this is a mistake.';
+        messageEl.innerHTML = '<i class="fas fa-times-circle"></i> You have been blocked from posting comments. Please contact support if you believe this is a mistake.';
         return;
     }
     
@@ -613,6 +632,7 @@ function loadLiveMatchData() {
     }
     
     // Load and display live data
+    loadTossInfo();
     loadLiveStats();
     loadLivePartnership();
     loadLiveBowler();
@@ -624,6 +644,70 @@ function loadLiveMatchData() {
     if (liveIndicator) {
         liveIndicator.style.display = 'flex';
     }
+}
+
+function loadTossInfo() {
+    const tossInfo = JSON.parse(localStorage.getItem('live_match_toss') || '{}');
+    const tossSection = document.getElementById('tossSection');
+    const tossResultText = document.getElementById('tossResultText');
+    const tossInsightCard = document.getElementById('tossInsightCard');
+    const tossInsightText = document.getElementById('tossInsightText');
+    
+    if (!tossInfo.winner || !tossSection) {
+        if (tossSection) tossSection.style.display = 'none';
+        return;
+    }
+    
+    // Get team names from live match or fixture
+    let teamAName = 'Team A';
+    let teamBName = 'Team B';
+    
+    // Try to get from fixtures
+    const fixtures = JSON.parse(localStorage.getItem('uploaded_fixtures') || localStorage.getItem('fixtures') || '[]');
+    if (fixtures.length > 0) {
+        const liveFixture = fixtures.find(f => getAutoFixtureStatus(f.date, f.time) === 'live');
+        if (liveFixture) {
+            teamAName = getTeamFullName(liveFixture.team1);
+            teamBName = getTeamFullName(liveFixture.team2);
+        }
+    }
+    
+    const winnerTeam = tossInfo.winner === 'teamA' ? teamAName : teamBName;
+    const decisionText = tossInfo.decision === 'bat' ? 'bat first' : 'bowl first';
+    const decisionFull = tossInfo.decision === 'bat' ? 'elected to bat first' : 'elected to bowl first';
+    
+    // Update toss result text
+    tossResultText.innerHTML = `
+        <strong>${winnerTeam}</strong> won the toss and 
+        <span class="decision">${decisionFull}</span>
+    `;
+    
+    // Show/hide insight card
+    if (tossInfo.insight) {
+        tossInsightText.textContent = tossInfo.insight;
+        tossInsightCard.style.display = 'block';
+    } else {
+        tossInsightCard.style.display = 'none';
+    }
+    
+    // Show toss section
+    tossSection.style.display = 'block';
+}
+
+function getTeamFullName(shortCode) {
+    const teamNames = {
+        'RCB': 'Royal Challengers Bangalore',
+        'MI': 'Mumbai Indians',
+        'CSK': 'Chennai Super Kings',
+        'KKR': 'Kolkata Knight Riders',
+        'DC': 'Delhi Capitals',
+        'SRH': 'Sunrisers Hyderabad',
+        'RR': 'Rajasthan Royals',
+        'PBSK': 'Punjab Kings',
+        'GT': 'Gujarat Titans',
+        'LSG': 'Lucknow Super Giants'
+    };
+    return teamNames[shortCode] || shortCode;
 }
 
 function loadLiveStats() {

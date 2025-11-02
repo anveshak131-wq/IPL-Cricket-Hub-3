@@ -38,7 +38,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-badge">
-                    <span>🔒 Admin Dashboard</span>
+                    <span><i class="fas fa-lock"></i> Admin Dashboard</span>
                 </div>
                 <h1>IPL CRICKET HUB MANAGEMENT</h1>
                 <p>Complete control center for players, fixtures, and points table</p>
@@ -51,21 +51,21 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">👥</div>
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
                     <div class="stat-info">
                         <div class="stat-number" id="totalPlayers">0</div>
                         <div class="stat-label">Total Players</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">📅</div>
+                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
                     <div class="stat-info">
                         <div class="stat-number" id="totalFixtures">0</div>
                         <div class="stat-label">Fixtures</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🏆</div>
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
                     <div class="stat-info">
                         <div class="stat-number" id="totalTeams">10</div>
                         <div class="stat-label">Teams</div>
@@ -79,11 +79,11 @@
     <section class="tabs-section">
         <div class="container">
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('players')">👥 Players</button>
-                <button class="tab-btn" onclick="switchTab('fixtures')">📅 Fixtures</button>
-                <button class="tab-btn" onclick="switchTab('points')">🏆 Points Table</button>
-                <button class="tab-btn" onclick="switchTab('commentary')">🎙️ Live Commentary</button>
-                <button class="tab-btn" onclick="switchTab('users')">👤 User Management</button>
+                <button class="tab-btn active" onclick="switchTab('players')"><i class="fas fa-users"></i> Players</button>
+                <button class="tab-btn" onclick="switchTab('fixtures')"><i class="fas fa-calendar-alt"></i> Fixtures</button>
+                <button class="tab-btn" onclick="switchTab('points')"><i class="fas fa-trophy"></i> Points Table</button>
+                <button class="tab-btn" onclick="switchTab('commentary')"><i class="fas fa-microphone"></i> Live Commentary</button>
+                <button class="tab-btn" onclick="switchTab('users')"><i class="fas fa-user"></i> User Management</button>
             </div>
         </div>
     </section>
@@ -95,7 +95,7 @@
             <div class="container">
                 <div class="section-card">
                     <div class="section-header">
-                        <h2>👥 Add Players - Manual Entry</h2>
+                        <h2><i class="fas fa-users"></i> Add Players - Manual Entry</h2>
                         <p>Add players directly. All changes are saved to your browser and reflected on the website.</p>
                     </div>
                     
@@ -120,7 +120,7 @@
 
                     <div class="button-group">
                         <button class="btn btn-add" onclick="addPlayerRow()">+ Add Player</button>
-                        <button class="btn btn-save" onclick="savePlayers()">💾 Save Players</button>
+                        <button class="btn btn-save" onclick="savePlayers()"><i class="fas fa-save"></i> Save Players</button>
                     </div>
 
                     <div class="message success-message" id="playersManualSuccess"></div>
@@ -150,7 +150,7 @@
             <div class="container">
                 <div class="section-card">
                     <div class="section-header">
-                        <h2>📅 Add Fixtures - Manual Entry</h2>
+                        <h2><i class="fas fa-calendar-alt"></i> Add Fixtures - Manual Entry</h2>
                         <p>Add match fixtures directly. All changes are saved to localStorage.</p>
                     </div>
 
@@ -158,7 +158,7 @@
 
                     <div class="button-group">
                         <button class="btn btn-add" onclick="addFixtureRow()">+ Add Fixture</button>
-                        <button class="btn btn-save" onclick="saveFixtures()">💾 Save Fixtures</button>
+                        <button class="btn btn-save" onclick="saveFixtures()"><i class="fas fa-save"></i> Save Fixtures</button>
                     </div>
 
                     <div class="message success-message" id="fixturesSuccess"></div>
@@ -188,7 +188,7 @@
             <div class="container">
                 <div class="section-card">
                     <div class="section-header">
-                        <h2>🏆 Add Points Table - Manual Entry</h2>
+                        <h2><i class="fas fa-trophy"></i> Add Points Table - Manual Entry</h2>
                         <p>Add points table data directly. All changes are saved to localStorage.</p>
                     </div>
 
@@ -196,7 +196,7 @@
 
                     <div class="button-group">
                         <button class="btn btn-add" onclick="addPointsRow()">+ Add Team</button>
-                        <button class="btn btn-save" onclick="savePoints()">💾 Save Points Table</button>
+                        <button class="btn btn-save" onclick="savePoints()"><i class="fas fa-save"></i> Save Points Table</button>
                     </div>
 
                     <div class="message success-message" id="pointsSuccess"></div>
@@ -226,7 +226,7 @@
             <div class="container">
                 <div class="section-card">
                     <div class="section-header">
-                        <h2>🎙️ Post Live Match Commentary</h2>
+                        <h2><i class="fas fa-microphone"></i> Post Live Match Commentary</h2>
                         <p>Add commentary every 5 overs or during breaks. AI will automatically enhance your text for better readability.</p>
                     </div>
 
@@ -240,7 +240,7 @@
                             <label>Commentary Text</label>
                             <textarea id="commentaryText" class="form-control" rows="5" placeholder="Example: Rohit Sharma hits a massive six over long-on. That's his third six of the innings!"></textarea>
                             <small class="form-hint">
-                                💡 Tip: Include player names, shot descriptions, and match situation. AI will add excitement and context!
+                                <i class="fas fa-lightbulb"></i> Tip: Include player names, shot descriptions, and match situation. AI will add excitement and context!
                             </small>
                         </div>
 
@@ -285,7 +285,7 @@
             <div class="container">
                 <div class="section-card">
                     <div class="section-header">
-                        <h2>📧 Collected User Emails</h2>
+                        <h2><i class="fas fa-envelope"></i> Collected User Emails</h2>
                         <p>All users who signed in to post comments on Live Match Updates</p>
                     </div>
 
@@ -325,7 +325,7 @@
             <div class="container">
                 <div class="section-card">
                     <div class="section-header">
-                        <h2>💬 User Comments Management</h2>
+                        <h2><i class="fas fa-comments"></i> User Comments Management</h2>
                         <p>Monitor and moderate user comments from Live Match Updates</p>
                     </div>
 
@@ -355,7 +355,7 @@
             <div class="container">
                 <div class="section-card">
                     <div class="section-header">
-                        <h2>🎙️ Admin Commentary Management</h2>
+                        <h2><i class="fas fa-microphone"></i> Admin Commentary Management</h2>
                         <p>Manage and delete admin-posted commentary (Admin access only)</p>
                     </div>
 
